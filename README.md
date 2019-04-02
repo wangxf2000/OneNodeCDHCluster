@@ -8,7 +8,7 @@
 $ ssh-keygen -t rsa -N ""
 ```
 
-- create a VM with at least 4 vCPUs/16GB RAM and use the created RSA key for login
+- create a Centos 7 VM with at least 4 vCPUs/16GB RAM and use the created RSA key for login
 - If needed, shutdown the machine and resize the disk to 100 GB, then repartition. Else skip to setting up NSG rules.
 - repartition the disk after resizing
 https://blogs.msdn.microsoft.com/cloud_solution_architect/2016/05/24/step-by-step-how-to-resize-a-linux-vm-os-disk-in-azure-arm/
