@@ -157,6 +157,11 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
+
+# need to accept trial licence and install Cloudera Management Service first
+# https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/ClouderaManagerResourceApi.html#begin_trial
+# https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/MgmtServiceResourceApi.html#setup_cms
+
 cat - > pythonCM-API.py <<EOF
 import cm_client
 from cm_client.rest import ApiException
@@ -166,7 +171,7 @@ import json
 
 cm_client.configuration.username = 'admin'
 cm_client.configuration.password = 'admin'
-api_url = "http://localhost:7180/api/v30"
+api_url = "http://localhost:7180/api/v32"
 api_client = cm_client.ApiClient(api_url)
 
 with open('OneNodeCluster_template.json') as in_file:
