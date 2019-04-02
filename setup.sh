@@ -169,7 +169,7 @@ cm_client.configuration.password = 'admin'
 api_url = "http://localhost:7180/api/v30"
 api_client = cm_client.ApiClient(api_url)
 
-with open('onenodecluster_template.json') as in_file:
+with open('OneNodeCluster_template.json') as in_file:
     json_str = in_file.read()
 
 Response = namedtuple("Response", "data")
