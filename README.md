@@ -5,7 +5,7 @@
 - create RSA key on your own laptop 
 
 ```
-$ ssh-keygen -t rsa -N ""
+$ ssh-keygen -t rsa
 ```
 
 - create a Centos 7 VM with at least 4 vCPUs/16GB RAM and use the created RSA key for login
