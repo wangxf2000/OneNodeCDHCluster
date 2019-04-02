@@ -8,11 +8,8 @@
 $ ssh-keygen -t rsa -N ""
 ```
 
-- create VM DSv13 using the created RSA key to login
-- If needed, shutdown the machine and resize the disk to 100 GB  
-
-TODO is there a way to create a bigger disk at creation?
-
+- create a VM with at least 4 vCPUs/16GB RAM and use the created RSA key for login
+- If needed, shutdown the machine and resize the disk to 100 GB, then repartition. Else skip to setting up NSG rules.
 - repartition the disk after resizing
 https://blogs.msdn.microsoft.com/cloud_solution_architect/2016/05/24/step-by-step-how-to-resize-a-linux-vm-os-disk-in-azure-arm/
 
@@ -154,7 +151,7 @@ tmpfs           5.6G     0  5.6G   0% /run/user/1000
 ```
 
 - add inbound rule to NSG to allow only your IP for security reasons
-- ssh into VM using RSA key
+- ssh into VM using the RSA key you created on your laptop.
 - copy this repo and run the setup
 
 ```
