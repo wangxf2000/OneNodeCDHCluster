@@ -158,6 +158,7 @@ tmpfs           5.6G     0  5.6G   0% /run/user/1000
 - copy this repo and run the setup
 
 ```
+$ sudo su -
 $ yum install -y git
 $ git clone https://github.com/fabiog1901/OneNodeCDHCluster.git
 $ cd OneNodeCDHCluster
