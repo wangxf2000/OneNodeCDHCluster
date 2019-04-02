@@ -178,7 +178,7 @@ cm_api_instance = cm_client.ClouderaManagerResourceApi(api_client)
 command = cm_api_instance.import_cluster_template(body=dst_cluster_template)
 EOF
 
-sed -i "s/YourHostName/`hostname`/g" onenodecluster_template.json
+sed -i "s/YourHostName/`hostname`/g" OneNodeCluster_template.json
 python pythonCM-API.py
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
