@@ -168,12 +168,26 @@ from cm_client.rest import ApiException
 from collections import namedtuple
 from pprint import pprint
 import json
+import time
+from __future__ import print_function
 
 cm_client.configuration.username = 'admin'
 cm_client.configuration.password = 'admin'
 api_url = "http://localhost:7180/api/v32"
 api_client = cm_client.ApiClient(api_url)
 
+api_instance = cm_client.ClouderaManagerResourceApi(api_client)
+
+# accept trial licence
+api_instance.begin_trial()
+
+# add hosts
+
+
+# create MGMT services
+
+
+# create the cluster using the template
 with open('OneNodeCluster_template.json') as in_file:
     json_str = in_file.read()
 
