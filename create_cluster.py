@@ -1,10 +1,10 @@
+from __future__ import print_function
 import cm_client
 from cm_client.rest import ApiException
 from collections import namedtuple
 from pprint import pprint
 import json
 import time
-from __future__ import print_function
 
 cm_client.configuration.username = 'admin'
 cm_client.configuration.password = 'admin'
