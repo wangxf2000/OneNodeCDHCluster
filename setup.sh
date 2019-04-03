@@ -27,49 +27,7 @@ echo "-- Install CM and MariaDB"
 wget https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
 rpm --import https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/RPM-GPG-KEY-cloudera
 yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server mariadb-server
-cat - >/etc/my.cnf <<EOF
-[mysqld]
-datadir=/var/lib/mysql
-socket=/var/lib/mysql/mysql.sock
-transaction-isolation = READ-COMMITTED
-symbolic-links = 0
-
-key_buffer = 16M
-key_buffer_size = 32M
-max_allowed_packet = 32M
-thread_stack = 256K
-thread_cache_size = 64
-query_cache_limit = 8M
-query_cache_size = 64M
-query_cache_type = 1
-
-max_connections = 550
-
-log_bin=/var/lib/mysql/mysql_binary_log
-
-server_id=1
-
-binlog_format = mixed
-
-read_buffer_size = 2M
-read_rnd_buffer_size = 16M
-sort_buffer_size = 8M
-join_buffer_size = 8M
-
-innodb_file_per_table = 1
-innodb_flush_log_at_trx_commit  = 2
-innodb_log_buffer_size = 64M
-innodb_buffer_pool_size = 4G
-innodb_thread_concurrency = 8
-innodb_flush_method = O_DIRECT
-innodb_log_file_size = 512M
-
-[mysqld_safe]etc/my.cnf.d/mariadb.pidg
-log-error=/var/log/mariadb/mariadb.log
-pid-file=/var/run/mariadb/mariadb.pid
-
-!includedir /etc/my.cnf.d
-EOF
+cat mariadb.config > /etc/my.cnf 
 
 echo "------------------------------------------------------"
 echo "--Enable and start MariaDB"
@@ -85,45 +43,11 @@ cp mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar /usr/share/ja
 
 echo "------------------------------------------------------"
 echo "-- Create DBs required by CM"
-mysql -u root <<EOF
-CREATE DATABASE scm DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON scm.* TO 'scm'@'%' IDENTIFIED BY 'cloudera';
-
-CREATE DATABASE amon DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON amon.* TO 'amon'@'%' IDENTIFIED BY 'cloudera';
-
-CREATE DATABASE rman DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON rman.* TO 'rman'@'%' IDENTIFIED BY 'cloudera';
-
-CREATE DATABASE hue DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON hue.* TO 'hue'@'%' IDENTIFIED BY 'cloudera';
-
-CREATE DATABASE metastore DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON metastore.* TO 'hive'@'%' IDENTIFIED BY 'cloudera';
-
-CREATE DATABASE sentry DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON sentry.* TO 'sentry'@'%' IDENTIFIED BY 'cloudera';
-
-CREATE DATABASE nav DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON nav.* TO 'nav'@'%' IDENTIFIED BY 'cloudera';
-
-CREATE DATABASE navms DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON navms.* TO 'navms'@'%' IDENTIFIED BY 'cloudera';
-
-CREATE DATABASE oozie DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-GRANT ALL ON oozie.* TO 'oozie'@'%' IDENTIFIED BY 'cloudera'
-EOF
+mysql -u root < create_db.sql
 
 echo "------------------------------------------------------"
 echo "-- Secure MariaDB"
-mysql -u root <<EOF
-  UPDATE mysql.user SET Password=PASSWORD('cloudera') WHERE User='root';
-  DELETE FROM mysql.user WHERE User='';
-  DROP DATABASE IF EXISTS test;
-  DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
-  FLUSH PRIVILEGES;
-EOF
-
+mysql -u root < secure_mariadb.sql
 
 echo "------------------------------------------------------"
 echo "-- Prepare CM database 'scm'"
@@ -157,59 +81,12 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-
 # need to accept trial licence and install Cloudera Management Service first
 # https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/ClouderaManagerResourceApi.html#begin_trial
 # https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/MgmtServiceResourceApi.html#setup_cms
 
-cat - > pythonCM-API.py <<EOF
-import cm_client
-from cm_client.rest import ApiException
-from collections import namedtuple
-from pprint import pprint
-import json
-import time
-from __future__ import print_function
-
-cm_client.configuration.username = 'admin'
-cm_client.configuration.password = 'admin'
-api_client = cm_client.ApiClient("http://localhost:7180/api/v32")
-
-cm_api = cm_client.ClouderaManagerResourceApi(api_client)
-
-# accept trial licence
-cm_api.begin_trial()
-
-# create hosts
-# uhm, not sure but doesn't look necessary...
-
-# create MGMT/CMS
-mgmt = cm_client.MgmtServiceResourceApi(api_client)
-body = cm_client.ApiService()
-
-body.roles = [cm_client.ApiRole(type='SERVICEMONITOR'), 
-    cm_client.ApiRole(type='ACTIVITYMONITOR'), 
-    cm_client.ApiRole(type='HOSTMONITOR'), 
-    cm_client.ApiRole(type='EVENTSERVER'), 
-    cm_client.ApiRole(type='REPORTSMANAGER'), 
-    cm_client.ApiRole(type='ALERTPUBLISHER')]
-
-mgmt.auto_assign_roles() # needed?
-mgmt.auto_configure()    # needed?
-mgmt.setup_cms(body=body)
-mgmt.start_command()
-
-# create the cluster using the template
-with open('OneNodeCluster_template.json') as in_file:
-    json_str = in_file.read()
-
-Response = namedtuple("Response", "data")
-dst_cluster_template=api_client.deserialize(response=Response(json_str),response_type=cm_client.ApiClusterTemplate)
-command = cm_api.import_cluster_template(body=dst_cluster_template)
-EOF
-
 sed -i "s/YourHostName/`hostname`/g" OneNodeCluster_template.json
-python pythonCM-API.py
+python create_cluster.py
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
 
