@@ -16,23 +16,33 @@ cm_api = cm_client.ClouderaManagerResourceApi(api_client)
 cm_api.begin_trial()
 
 # create hosts
-h = cm_client.HostsResourceApi(api_client)
-body = cm_client.ApiHostList([cm_client.ApiHost(hostname='YourHostName', ip_address='YourHostIpAddress')])
-h.create_hosts(body=body)
+#hosts_api = cm_client.HostsResourceApi(api_client)
+#api_host_list = cm_client.ApiHostList([cm_client.ApiHost(hostname='YourHostName', ip_address='YourHostIpAddress')])
+#hosts_api.create_hosts(body=api_host_list)
+
+instargs = cm_client.ApiHostInstallArguments(host_names=['fab.ue2v4pwgnmtevd3wmxx0ndpkka.bx.internal.cloudapp.net'], 
+                                             user_name='root', 
+                                             private_key=YourPrivateKey, 
+                                             cm_repo_url='https://archive.cloudera.com/cm6/6.2.0', 
+                                             java_install_strategy='NONE', 
+                                             ssh_port=22, 
+                                             passphrase='')
+
+cm_api.host_install_command(body=instargs)
 
 # create MGMT/CMS
-mgmt = cm_client.MgmtServiceResourceApi(api_client)
-body = cm_client.ApiService()
+mgmt_api = cm_client.MgmtServiceResourceApi(api_client)
+api_service = cm_client.ApiService()
 
-body.roles = [cm_client.ApiRole(type='SERVICEMONITOR'), 
+api_service.roles = [cm_client.ApiRole(type='SERVICEMONITOR'), 
     cm_client.ApiRole(type='HOSTMONITOR'), 
     cm_client.ApiRole(type='EVENTSERVER'),  
     cm_client.ApiRole(type='ALERTPUBLISHER')]
 
-mgmt.auto_assign_roles() # needed?
-mgmt.auto_configure()    # needed?
-mgmt.setup_cms(body=body)
-mgmt.start_command()
+mgmt_api.auto_assign_roles() # needed?
+mgmt_api.auto_configure()    # needed?
+mgmt_api.setup_cms(body=api_service)
+mgmt_api.start_command()
 
 # create the cluster using the template
 with open('OneNodeCluster_template.json') as in_file:
