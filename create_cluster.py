@@ -16,7 +16,9 @@ cm_api = cm_client.ClouderaManagerResourceApi(api_client)
 cm_api.begin_trial()
 
 # create hosts
-# uhm, not sure but doesn't look necessary...
+h = cm_client.HostsResourceApi(api_client)
+body = cm_client.ApiHostList([cm_client.ApiHost(hostname='YourHostName', ip_address='YourHostIpAddress')])
+h.create_hosts(body=body)
 
 # create MGMT/CMS
 mgmt = cm_client.MgmtServiceResourceApi(api_client)
