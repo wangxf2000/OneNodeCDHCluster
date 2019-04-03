@@ -173,19 +173,31 @@ from __future__ import print_function
 
 cm_client.configuration.username = 'admin'
 cm_client.configuration.password = 'admin'
-api_url = "http://localhost:7180/api/v32"
-api_client = cm_client.ApiClient(api_url)
+api_client = cm_client.ApiClient("http://localhost:7180/api/v32")
 
-api_instance = cm_client.ClouderaManagerResourceApi(api_client)
+cm_api = cm_client.ClouderaManagerResourceApi(api_client)
 
 # accept trial licence
-api_instance.begin_trial()
+cm_api.begin_trial()
 
-# add hosts
+# create hosts
+# uhm, not sure but doesn't look necessary...
 
+# create MGMT/CMS
+mgmt = cm_client.MgmtServiceResourceApi(api_client)
+body = cm_client.ApiService()
 
-# create MGMT services
+body.roles = [cm_client.ApiRole(type='SERVICEMONITOR'), 
+    cm_client.ApiRole(type='ACTIVITYMONITOR'), 
+    cm_client.ApiRole(type='HOSTMONITOR'), 
+    cm_client.ApiRole(type='EVENTSERVER'), 
+    cm_client.ApiRole(type='REPORTSMANAGER'), 
+    cm_client.ApiRole(type='ALERTPUBLISHER')]
 
+mgmt.auto_assign_roles() # needed?
+mgmt.auto_configure()    # needed?
+mgmt.setup_cms(body=body)
+mgmt.start_command()
 
 # create the cluster using the template
 with open('OneNodeCluster_template.json') as in_file:
@@ -193,8 +205,7 @@ with open('OneNodeCluster_template.json') as in_file:
 
 Response = namedtuple("Response", "data")
 dst_cluster_template=api_client.deserialize(response=Response(json_str),response_type=cm_client.ApiClusterTemplate)
-cm_api_instance = cm_client.ClouderaManagerResourceApi(api_client)
-command = cm_api_instance.import_cluster_template(body=dst_cluster_template)
+command = cm_api.import_cluster_template(body=dst_cluster_template)
 EOF
 
 sed -i "s/YourHostName/`hostname`/g" OneNodeCluster_template.json
