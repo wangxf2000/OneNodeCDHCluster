@@ -23,10 +23,8 @@ mgmt = cm_client.MgmtServiceResourceApi(api_client)
 body = cm_client.ApiService()
 
 body.roles = [cm_client.ApiRole(type='SERVICEMONITOR'), 
-    cm_client.ApiRole(type='ACTIVITYMONITOR'), 
     cm_client.ApiRole(type='HOSTMONITOR'), 
-    cm_client.ApiRole(type='EVENTSERVER'), 
-    cm_client.ApiRole(type='REPORTSMANAGER'), 
+    cm_client.ApiRole(type='EVENTSERVER'),  
     cm_client.ApiRole(type='ALERTPUBLISHER')]
 
 mgmt.auto_assign_roles() # needed?
