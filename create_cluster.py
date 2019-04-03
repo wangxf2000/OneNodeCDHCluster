@@ -57,3 +57,7 @@ with open('OneNodeCluster_template.json') as f:
 Response = namedtuple("Response", "data")
 dst_cluster_template=api_client.deserialize(response=Response(json_str),response_type=cm_client.ApiClusterTemplate)
 command = cm_api.import_cluster_template(body=dst_cluster_template)
+
+# API Docs for reference
+# https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/ClouderaManagerResourceApi.html
+# https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/MgmtServiceResourceApi.html
