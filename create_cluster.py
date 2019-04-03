@@ -6,6 +6,37 @@ from pprint import pprint
 import json
 import time
 
+def wait(cmd, timeout=None):
+    SYNCHRONOUS_COMMAND_ID = -1
+    if cmd.id == SYNCHRONOUS_COMMAND_ID:
+        return cmd
+
+    SLEEP_SECS = 5
+    if timeout is None:
+        deadline = None
+    else:
+        deadline = time.time() + timeout
+
+    try:
+        cmd_api_instance = cm_client.CommandsResourceApi(api_client)
+        while True:
+            cmd = cmd_api_instance.read_command(long(cmd.id))
+            pprint(cmd)
+            if not cmd.active:
+                return cmd
+
+            if deadline is not None:
+                now = time.time()
+                if deadline < now:
+                    return cmd
+                else:
+                    time.sleep(min(SLEEP_SECS, deadline - now))
+            else:
+                time.sleep(SLEEP_SECS)
+    except ApiException as e:
+        print("Exception when calling ClouderaManagerResourceApi->import_cluster_template: %s\n" % e)
+
+
 cm_client.configuration.username = 'admin'
 cm_client.configuration.password = 'admin'
 api_client = cm_client.ApiClient("http://localhost:7180/api/v32")
@@ -15,13 +46,7 @@ cm_api = cm_client.ClouderaManagerResourceApi(api_client)
 # accept trial licence
 cm_api.begin_trial()
 
-# create hosts TODO: delete if not needed
-#hosts_api = cm_client.HostsResourceApi(api_client)
-#api_host_list = cm_client.ApiHostList([cm_client.ApiHost(hostname='YourHostName', ip_address='YourHostIpAddress')])
-#hosts_api.create_hosts(body=api_host_list)
-
 # Install CM Agent on host
-
 with open ("/root/myRSAkey", "r") as f:
     key = f.read()
 
@@ -34,7 +59,8 @@ instargs = cm_client.ApiHostInstallArguments(host_names=['YourHostName'],
                                              ssh_port=22, 
                                              passphrase='')
 
-cm_api.host_install_command(body=instargs)
+cmd = cm_api.host_install_command(body=instargs)
+wait(cmd)
 
 # create MGMT/CMS
 mgmt_api = cm_client.MgmtServiceResourceApi(api_client)
@@ -48,7 +74,8 @@ api_service.roles = [cm_client.ApiRole(type='SERVICEMONITOR'),
 mgmt_api.auto_assign_roles() # needed?
 mgmt_api.auto_configure()    # needed?
 mgmt_api.setup_cms(body=api_service)
-mgmt_api.start_command()
+cmd = mgmt_api.start_command()
+wait(cmd)
 
 # create the cluster using the template
 with open('OneNodeCluster_template.json') as f:
@@ -56,7 +83,8 @@ with open('OneNodeCluster_template.json') as f:
 
 Response = namedtuple("Response", "data")
 dst_cluster_template=api_client.deserialize(response=Response(json_str),response_type=cm_client.ApiClusterTemplate)
-command = cm_api.import_cluster_template(body=dst_cluster_template)
+cmd = cm_api.import_cluster_template(body=dst_cluster_template)
+wait(cmd)
 
 # API Docs for reference
 # https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/ClouderaManagerResourceApi.html
