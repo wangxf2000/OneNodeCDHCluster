@@ -76,16 +76,14 @@ done
 
 echo "------------------------------------------------------"
 echo "-- Now CM is started and the next step is to automate using the CM API"
+
 yum install -y epel-release
 yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-# need to accept trial licence and install Cloudera Management Service first
-# https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/ClouderaManagerResourceApi.html#begin_trial
-# https://archive.cloudera.com/cm6/6.2.0/generic/jar/cm_api/swagger-html-sdk-docs/python/docs/MgmtServiceResourceApi.html#setup_cms
-
 sed -i "s/YourHostName/`hostname`/g" OneNodeCluster_template.json
+sed -i "s/YourHostName/`hostname`/g" create_cluster.py
 python create_cluster.py
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
