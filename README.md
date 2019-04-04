@@ -16,7 +16,7 @@ https://blogs.msdn.microsoft.com/cloud_solution_architect/2016/05/24/step-by-ste
 
 SHORT WAY
 ```
-fdisk /dev/sda <<EOF
+$ fdisk /dev/sda <<EOF
 u
 p
 d
