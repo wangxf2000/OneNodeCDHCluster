@@ -4,6 +4,8 @@ This script automatically sets up a CDH cluster on a single VM with the followin
 
 As this cluster is meant to be used for demos, experimenting, training, and workshops, it doesn't setup Kerberos and TLS.
 
+## Instructions
+
 ### Provision VM on Azure
 
 - create RSA key on your own laptop 
@@ -154,6 +156,8 @@ tmpfs            28G     0   28G   0% /sys/fs/cgroup
 tmpfs           5.6G     0  5.6G   0% /run/user/1000
 ```
 
+### Configuration and installation
+
 - add inbound rule to NSG to allow only your IP for security reasons
 - ssh into VM using the RSA key you created on your laptop.
 - copy this repo and run the setup
@@ -166,3 +170,9 @@ $ cd OneNodeCDHCluster
 $ chmod +x setup.sh
 $ ./setup.sh
 ```
+
+Wait until the script finishes, check for any error.
+
+### Use
+
+Once the script returns, you can open Cloudera Manager at http://<vm-ip-address>:7189
