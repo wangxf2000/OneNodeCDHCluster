@@ -1,5 +1,9 @@
 # One Node CDH Cluster on Azure
 
+This script automatically sets up a CDH cluster on a single VM with the following 10 services: Kafka, Kudu, Impala, Hue, Hive, Spark, Oozie, HDFS, YARN and ZK. More services can be added or removed by updating the template used.
+
+As this cluster is meant to be used for demos, experimenting, training, and workshops, it doesn't setup Kerberos and TLS.
+
 ### Provision VM on Azure
 
 - create RSA key on your own laptop 
