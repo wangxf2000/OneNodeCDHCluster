@@ -10,6 +10,7 @@ echo "------------------------------------------------------"
 echo "-- Install Java OpenJDK8 and other tools, and run 'os-generic-bootstrap.sh'"
 yum install -y java-1.8.0-openjdk-devel vim wget curl git
 curl -sSL https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-bootstrap-scripts/os-generic-bootstrap.sh | sh
+sleep 10
 
 echo "------------------------------------------------------"
 echo "-- Configure networking"
