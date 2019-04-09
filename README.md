@@ -175,4 +175,4 @@ Wait until the script finishes, check for any error.
 
 ### Use
 
-Once the script returns, you can open Cloudera Manager at http://<vm-ip-address>:7189
+Once the script returns, you can open Cloudera Manager at http://\<vm-ip-address\>:7189
