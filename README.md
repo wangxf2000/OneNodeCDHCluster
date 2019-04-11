@@ -27,8 +27,8 @@ $ chmod +x setup.sh
 The script `setup.sh` takes the cloud provider name as a parameter: `aws`,`azure`,`gcp`, for example:
 
 ```
-$ .
-
+$ ./setup.sh aws
+```
 Wait until the script finishes, check for any error.
 
 ### Use
