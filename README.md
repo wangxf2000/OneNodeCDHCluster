@@ -8,12 +8,12 @@ As this cluster is meant to be used for demos, experimenting, training, and work
 
 ### Provision VM 
 
-- create a Centos 7 VM with at least 4 vCPUs/16GB RAM.
-- If you created the VM on Azure and need to resize the OS disk, you might want to follow these [instructions](how-to-resize-os-disk.md), else skip to setting up the Security Group rules.
+- Create a Centos 7 VM with at least 4 vCPUs/16GB RAM.
+- If you created the VM on Azure and need to resize the OS disk, you might want to follow these [instructions]
 
 ### Configuration and installation
 
-- add inbound rule to the Security Group to allow only your IP for security reasons.
+- add inbound rule to the Security Group to allow your IP only, for all ports.
 - ssh into VM and copy this repo.
 
 ```
@@ -23,7 +23,7 @@ $ git clone https://github.com/fabiog1901/OneNodeCDHCluster.git
 $ chmod +x OneNodeCDHCluster/setup.sh
 ```
 
-The script `setup.sh` takes a parameter: 'aws','azure','gcp', example:
+The script `setup.sh` takes the cloud provider name as a parameter: 'aws','azure','gcp', for example:
 
 ```
 $ OneNodeCDHCluster/setup.sh aws
