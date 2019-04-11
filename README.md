@@ -1,4 +1,4 @@
-# One Node CDH Cluster
+# One Node CDH Cluster on AWS, Azure, GCP
 
 This script automatically sets up a CDH cluster on a single VM with the following 10 services: Kafka, Kudu, Impala, Hue, Hive, Spark, Oozie, HDFS, YARN and ZK. More services can be added or removed by updating the template used.
 
