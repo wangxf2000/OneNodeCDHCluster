@@ -1,4 +1,4 @@
-# One Node CDH Cluster on Azure
+# One Node CDH Cluster
 
 This script automatically sets up a CDH cluster on a single VM with the following 10 services: Kafka, Kudu, Impala, Hue, Hive, Spark, Oozie, HDFS, YARN and ZK. More services can be added or removed by updating the template used.
 
@@ -6,17 +6,11 @@ As this cluster is meant to be used for demos, experimenting, training, and work
 
 ## Instructions
 
-### Provision VM on Azure
+### Provision VM 
 
-- create RSA key on your own laptop 
-
-```
-$ ssh-keygen -t rsa
-```
-
-- create a Centos 7 VM with at least 4 vCPUs/16GB RAM and use the created RSA key for login
-- If needed, shutdown the machine and resize the disk to 100 GB, then repartition. Else skip to setting up NSG rules.
-- repartition the disk after resizing
+- create a Centos 7 VM with at least 4 vCPUs/16GB RAM.
+- If you created the VM on Azure and need to resize the OS disk, you might want to follow below instructions, else skip to setting up the Security Group rules.
+- stop the VM, resize the OS disk, start the VM and repartition the disk after resizing
 https://blogs.msdn.microsoft.com/cloud_solution_architect/2016/05/24/step-by-step-how-to-resize-a-linux-vm-os-disk-in-azure-arm/
 
 
@@ -158,17 +152,20 @@ tmpfs           5.6G     0  5.6G   0% /run/user/1000
 
 ### Configuration and installation
 
-- add inbound rule to NSG to allow only your IP for security reasons
-- ssh into VM using the RSA key you created on your laptop.
-- copy this repo and run the setup
+- add inbound rule to the Security Group to allow only your IP for security reasons.
+- ssh into VM and copy this repo.
 
 ```
 $ sudo su -
 $ yum install -y git
 $ git clone https://github.com/fabiog1901/OneNodeCDHCluster.git
-$ cd OneNodeCDHCluster
-$ chmod +x setup.sh
-$ ./setup.sh
+$ chmod +x OneNodeCDHCluster/setup.sh
+```
+
+The script `setup.sh` takes a parameter: 'aws','azure','gcp', example:
+
+```
+$ OneNodeCDHCluster/setup.sh aws
 ```
 
 Wait until the script finishes, check for any error.
