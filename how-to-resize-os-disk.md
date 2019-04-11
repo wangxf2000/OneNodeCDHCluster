@@ -1,5 +1,7 @@
-- stop the VM, resize the OS disk, start the VM and repartition the disk after resizing
-https://blogs.msdn.microsoft.com/cloud_solution_architect/2016/05/24/step-by-step-how-to-resize-a-linux-vm-os-disk-in-azure-arm/
+
+### Instructions
+
+Stop the VM, resize the OS disk, start the VM and repartition the disk after resizing:
 
 
 SHORT WAY
@@ -137,3 +139,7 @@ tmpfs            28G     0   28G   0% /sys/fs/cgroup
 /dev/sdb1       111G   61M  105G   1% /mnt/resource
 tmpfs           5.6G     0  5.6G   0% /run/user/1000
 ```
+
+### Reference
+
+https://blogs.msdn.microsoft.com/cloud_solution_architect/2016/05/24/step-by-step-how-to-resize-a-linux-vm-os-disk-in-azure-arm/
