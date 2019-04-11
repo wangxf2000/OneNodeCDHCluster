@@ -1,3 +1,10 @@
+if [ -z $1 ]
+then
+    echo "must add parameter ['aws' | 'azure' | 'gcp']"
+    echo "example: ./setup.sh aws"
+    exit 1
+fi
+
 echo "------------------------------------------------------"
 echo "-- Configure the OS"
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
@@ -9,8 +16,13 @@ sysctl vm.swappiness=1
 echo "------------------------------------------------------"
 echo "-- Install Java OpenJDK8 and other tools, and run 'os-generic-bootstrap.sh'"
 yum install -y java-1.8.0-openjdk-devel vim wget curl git
-curl -sSL https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-bootstrap-scripts/os-generic-bootstrap.sh | sh
-sleep 10
+
+if [ $1 = "azure" ]
+then
+    echo "It's azure!"
+    curl -sSL https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-bootstrap-scripts/os-generic-bootstrap.sh | sh
+    sleep 10
+fi
 
 echo "------------------------------------------------------"
 echo "-- Configure networking"
