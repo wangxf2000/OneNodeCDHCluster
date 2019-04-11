@@ -73,7 +73,7 @@ mkdir /root/.ssh
 cat ~/myRSAkey.pub >> ~/.ssh/authorized_keys
 chmod 400 ~/.ssh/authorized_keys 
 ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
-sed -i 's/#PermitRootLogin yes/PermitRootLogin without-password/' /etc/ssh/sshd_config
+sed -i 's/.*PermitRootLogin.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
 systemctl restart sshd
 
 echo "------------------------------------------------------"
