@@ -23,7 +23,7 @@ $ git clone https://github.com/fabiog1901/OneNodeCDHCluster.git
 $ chmod +x OneNodeCDHCluster/setup.sh
 ```
 
-The script `setup.sh` takes the cloud provider name as a parameter: 'aws','azure','gcp', for example:
+The script `setup.sh` takes the cloud provider name as a parameter: `aws`,`azure`,`gcp`, for example:
 
 ```
 $ OneNodeCDHCluster/setup.sh aws
