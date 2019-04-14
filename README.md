@@ -1,6 +1,6 @@
-# One Node CDH Cluster on AWS, Azure, GCP
+# One Node CDH Cluster
 
-This script automatically sets up a CDH cluster on a single VM with the following 10 services: Kafka, Kudu, Impala, Hue, Hive, Spark, Oozie, HDFS, YARN and ZK. More services can be added or removed by updating the template used.
+This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 10 services: Kafka, Kudu, Impala, Hue, Hive, Spark, Oozie, HDFS, YARN and ZK. More services can be added or removed by updating the template used.
 
 As this cluster is meant to be used for demos, experimenting, training, and workshops, it doesn't setup Kerberos and TLS.
 
@@ -9,7 +9,7 @@ As this cluster is meant to be used for demos, experimenting, training, and work
 ### Provision VM 
 
 - Create a Centos 7 VM with at least 4 vCPUs/16GB RAM.
-- If you created the VM on Azure and need to resize the OS disk, you might want to follow these [instructions](how-to-resize-os-disk.md).
+- If you created the VM on Azure and need to resize the OS disk, here are the [instructions](how-to-resize-os-disk.md).
 
 ### Configuration and installation
 
