@@ -79,6 +79,10 @@
                 "value": "/kudu/twal"
             },
             {
+	                    "name": "nifitoolkitca-nifi.toolkit.tls.ca.server.token",
+	                    "value": "Cloudera_123"
+            },
+            {
                 "name": "oozie-OOZIE_SERVER-BASE-oozie_database_host",
                 "value": "YourHostName"
             },
@@ -98,22 +102,17 @@
     },
     "products": [
         {
+                "product": "CFM",
+                "version": "1.0.0.0"
+        },
+        {
             "product": "CDH",
             "version": "6.2.0-1.cdh6.2.0.p0.967373"
         }
     ],
     "repositories": [
         "https://archive.cloudera.com/cdh6/{latest_supported}/parcels/",
-        "https://archive.cloudera.com/cdh5/parcels/5.16/",
-        "https://parcels.repos.intel.com/mkl/latest",
-        "https://archive.cloudera.com/accumulo-c5/parcels/latest/",
-        "https://archive.cloudera.com/accumulo6/6.1/parcels/",
-        "https://archive.cloudera.com/kafka/parcels/latest/",
-        "http://archive.cloudera.com/kudu/parcels/latest/",
-        "https://archive.cloudera.com/spark/parcels/latest/",
-        "https://archive.cloudera.com/sqoop-teradata-connector1/latest/",
-        "https://archive.cloudera.com/sqoop-netezza-connector1/latest/",
-        "https://archive.cloudera.com/sqoop-connectors/parcels/latest/"
+        "http://archive.cloudera.com/CFM/parcels/1.0.0.0/"
     ],
     "services": [
         {
@@ -378,6 +377,61 @@
                 }
             ],
             "serviceType": "HIVE"
+        },
+        {
+	    "refName": "nifitoolkitca",
+	    "roleConfigGroups": [
+		{
+		    "base": true,
+		    "refName": "nifitoolkitca-NIFI_TOOLKIT_SERVER-BASE",
+		    "roleType": "NIFI_TOOLKIT_SERVER"
+		}
+	    ],
+	    "serviceConfigs": [
+		{
+		    "name": "nifi.toolkit.tls.ca.server.token",
+		    "variable": "nifitoolkitca-nifi.toolkit.tls.ca.server.token"
+		}
+	    ],
+	    "serviceType": "NIFITOOLKITCA"
+	},
+	{
+	    "refName": "nifiregistry",
+	    "roleConfigGroups": [
+		{
+		    "base": true,
+		    "refName": "nifiregistry-NIFI_REGISTRY_SERVER-BASE",
+		    "roleType": "NIFI_REGISTRY_SERVER"
+		}
+	    ],
+	    "serviceConfigs": [
+		{
+		    "name": "nifitoolkitca_service",
+		    "ref": "nifitoolkitca"
+		}
+	    ],
+	    "serviceType": "NIFIREGISTRY"
+	},
+	{
+	    "refName": "nifi",
+	    "roleConfigGroups": [
+		{
+		    "base": true,
+		    "refName": "nifi-NIFI_NODE-BASE",
+		    "roleType": "NIFI_NODE"
+		}
+	    ],
+	    "serviceConfigs": [
+		{
+		    "name": "zookeeper_service",
+		    "ref": "zookeeper"
+		},
+		{
+		    "name": "nifitoolkitca_service",
+		    "ref": "nifitoolkitca"
+		}
+	    ],
+	    "serviceType": "NIFI"
         }
     ]
 }
