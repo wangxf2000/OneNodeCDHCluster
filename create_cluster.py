@@ -47,7 +47,7 @@ cm_api = cm_client.ClouderaManagerResourceApi(api_client)
 cm_api.begin_trial()
 
 # Install CM Agent on host
-with open ("/root/myRSAkey", "r") as f:
+with open ("~/myRSAkey", "r") as f:
     key = f.read()
 
 
@@ -78,7 +78,7 @@ cmd = mgmt_api.start_command()
 wait(cmd)
 
 # create the cluster using the template
-with open('OneNodeCluster_template.json') as f:
+with open('~/OneNodeCDHCluster/default_template.json') as f:
     json_str = f.read()
 
 Response = namedtuple("Response", "data")
