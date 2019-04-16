@@ -9,6 +9,7 @@ As this cluster is meant to be used for demos, experimenting, training, and work
 ### Provision VM 
 
 - Create a Centos 7 VM with at least 4 vCPUs/16GB RAM.
+- OS disk size: at least 50 GB.
 - If you created the VM on Azure and need to resize the OS disk, here are the [instructions](how-to-resize-os-disk.md).
 
 ### Configuration and installation
