@@ -78,7 +78,7 @@ cmd = mgmt_api.start_command()
 wait(cmd)
 
 # create the cluster using the template
-with open('default_template.json') as f:
+with open('OneNodeCDHCluster/default_template.json') as f:
     json_str = f.read()
 
 Response = namedtuple("Response", "data")
