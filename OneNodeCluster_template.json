@@ -29,7 +29,10 @@
                 "yarn-JOBHISTORY-BASE",
                 "yarn-NODEMANAGER-BASE",
                 "yarn-RESOURCEMANAGER-BASE",
-                "zookeeper-SERVER-BASE"
+                "zookeeper-SERVER-BASE",
+		"nifi-NIFI_NODE-BASE",
+                "nifiregistry-NIFI_REGISTRY_SERVER-BASE",
+                "nifitoolkitca-NIFI_TOOLKIT_SERVER-BASE"
             ]
         }
     ],
@@ -79,8 +82,8 @@
                 "value": "/kudu/twal"
             },
             {
-	                    "name": "nifitoolkitca-nifi.toolkit.tls.ca.server.token",
-	                    "value": "Cloudera_123"
+	        "name": "nifitoolkitca-nifi.toolkit.tls.ca.server.token",
+	        "value": "Cloudera_123"
             },
             {
                 "name": "oozie-OOZIE_SERVER-BASE-oozie_database_host",
