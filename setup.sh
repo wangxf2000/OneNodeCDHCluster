@@ -50,7 +50,7 @@ systemctl start mariadb
 echo "------------------------------------------------------"
 echo "-- Install JDBC connector"
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz
-tar zxvf mysql-connector-java-5.1.46.tar.gz
+tar zxf mysql-connector-java-5.1.46.tar.gz
 mkdir -p /usr/share/java/
 cp mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar
 
@@ -75,6 +75,17 @@ chmod 400 ~/.ssh/authorized_keys
 ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
 sed -i 's/.*PermitRootLogin.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
 systemctl restart sshd
+
+
+echo "------------------------------------------------------"
+echo "-- Install CSDs"
+wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFICA-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFIREGISTRY-0.3.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+
+chown cloudera-scm:cloudera-scm /opt/cloudera/csd/* 
+chmod 644 /opt/cloudera/csd/*
+
 
 echo "------------------------------------------------------"
 echo "-- Start CM, it takes about 2 minutes to be ready"
