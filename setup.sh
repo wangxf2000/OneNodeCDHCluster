@@ -45,9 +45,9 @@ cat mariadb.config > /etc/my.cnf
 
 echo "------------------------------------------------------"
 echo "-- Install CSDs"
-wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
-wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFICA-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
-wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFIREGISTRY-0.3.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFICA-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFIREGISTRY-0.3.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
 
 chown cloudera-scm:cloudera-scm /opt/cloudera/csd/* 
 chmod 644 /opt/cloudera/csd/*
@@ -67,11 +67,11 @@ cp mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar /usr/share/ja
 
 echo "------------------------------------------------------"
 echo "-- Create DBs required by CM"
-mysql -u root < create_db.sql
+mysql -u root < ~/OneNodeCDHCluster/create_db.sql
 
 echo "------------------------------------------------------"
 echo "-- Secure MariaDB"
-mysql -u root < secure_mariadb.sql
+mysql -u root < ~/OneNodeCDHCluster/secure_mariadb.sql
 
 echo "------------------------------------------------------"
 echo "-- Prepare CM database 'scm'"
@@ -80,7 +80,7 @@ echo "-- Prepare CM database 'scm'"
 echo "------------------------------------------------------"
 echo "-- Enable passwordless root login via rsa key"
 ssh-keygen -f ~/myRSAkey -t rsa -N ""
-mkdir /root/.ssh
+mkdir ~/.ssh
 cat ~/myRSAkey.pub >> ~/.ssh/authorized_keys
 chmod 400 ~/.ssh/authorized_keys 
 ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
@@ -107,9 +107,9 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-sed -i "s/YourHostName/`hostname`/g" OneNodeCluster_template.json
-sed -i "s/YourHostName/`hostname`/g" create_cluster.py
-python create_cluster.py
+sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/default_template.json
+sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/create_cluster.py
+python ~/OneNodeCDHCluster/create_cluster.py
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
 
