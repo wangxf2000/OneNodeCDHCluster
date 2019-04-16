@@ -42,6 +42,17 @@ rpm --import https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/RPM-GPG-KEY-clou
 yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server mariadb-server
 cat mariadb.config > /etc/my.cnf 
 
+
+echo "------------------------------------------------------"
+echo "-- Install CSDs"
+wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFICA-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFIREGISTRY-0.3.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
+
+chown cloudera-scm:cloudera-scm /opt/cloudera/csd/* 
+chmod 644 /opt/cloudera/csd/*
+
+
 echo "------------------------------------------------------"
 echo "--Enable and start MariaDB"
 systemctl enable mariadb
@@ -75,16 +86,6 @@ chmod 400 ~/.ssh/authorized_keys
 ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
 sed -i 's/.*PermitRootLogin.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
 systemctl restart sshd
-
-
-echo "------------------------------------------------------"
-echo "-- Install CSDs"
-wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
-wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFICA-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
-wget http://archive.cloudera.com/CFM/csd/1.0.0.0/NIFIREGISTRY-0.3.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
-
-chown cloudera-scm:cloudera-scm /opt/cloudera/csd/* 
-chmod 644 /opt/cloudera/csd/*
 
 
 echo "------------------------------------------------------"
