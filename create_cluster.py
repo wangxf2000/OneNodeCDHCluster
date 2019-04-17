@@ -5,6 +5,7 @@ from collections import namedtuple
 from pprint import pprint
 import json
 import time
+import sys
 
 def wait(cmd, timeout=None):
     SYNCHRONOUS_COMMAND_ID = -1
@@ -78,7 +79,7 @@ cmd = mgmt_api.start_command()
 wait(cmd)
 
 # create the cluster using the template
-with open('OneNodeCDHCluster/default_template.json') as f:
+with open(sys.argv[1]) as f:
     json_str = f.read()
 
 Response = namedtuple("Response", "data")
