@@ -1,6 +1,6 @@
 # One Node CDH Cluster
 
-This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 10 services: Kafka, Kudu, Impala, Hue, Hive, Spark, Oozie, HDFS, YARN and ZK. More services can be added or removed by updating the template used.
+This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 13 services: NiFi, NiFi CA, NiFi Registry, Kafka, Kudu, Impala, Hue, Hive, Spark, Oozie, HDFS, YARN and ZK. More services can be added or removed by updating the template used.
 
 As this cluster is meant to be used for demos, experimenting, training, and workshops, it doesn't setup Kerberos and TLS.
 
