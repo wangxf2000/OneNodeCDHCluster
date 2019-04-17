@@ -115,7 +115,9 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-sed -i "s/YourHostName/$PUBLIC_IP_DNS/g" ~/OneNodeCDHCluster/$TEMPLATE
+YourPublicHostName
+sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourPublicHostName/$PUBLIC_IP_DNS/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourHostName/$PUBLIC_IP_DNS/g" ~/OneNodeCDHCluster/create_cluster.py
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
