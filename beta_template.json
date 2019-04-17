@@ -83,7 +83,7 @@
             },
             {
 	        "name": "nifitoolkitca-nifi.toolkit.tls.ca.server.token",
-	        "value": "Cloudera_123"
+	        "value": "ClouderaNiFi_123"
             },
             {
                 "name": "oozie-OOZIE_SERVER-BASE-oozie_database_host",
