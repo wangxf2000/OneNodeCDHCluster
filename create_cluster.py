@@ -84,7 +84,7 @@ with open(sys.argv[1]) as f:
 
 Response = namedtuple("Response", "data")
 dst_cluster_template=api_client.deserialize(response=Response(json_str),response_type=cm_client.ApiClusterTemplate)
-cmd = cm_api.import_cluster_template(body=dst_cluster_template)
+cmd = cm_api.import_cluster_template(add_repositories=True, body=dst_cluster_template)
 wait(cmd)
 
 # API Docs for reference
