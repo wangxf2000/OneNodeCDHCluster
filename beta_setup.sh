@@ -6,6 +6,8 @@ echo never > /sys/kernel/mm/transparent_hugepage/enabled
 # TODO make 2 above commands to be permanent
 echo  "vm.swappiness = 1" >> /etc/sysctl.conf
 sysctl vm.swappiness=1
+# CDSW requires Centos 7.5, so we trick it to believe it is...
+echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 
 echo "-- Install Java OpenJDK8 and other tools"
 yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
@@ -14,6 +16,7 @@ yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
 case "$1" in
         aws)
             PUBLIC_IP_DNS=`dig +short myip.opendns.com @resolver1.opendns.com`
+            # curl http://169.254.169.254/latest/meta-data/public-hostname
             ;;
          
         azure)
@@ -112,8 +115,8 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/create_cluster.py
+sed -i "s/YourHostName/$PUBLIC_IP_DNS/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourHostName/$PUBLIC_IP_DNS/g" ~/OneNodeCDHCluster/create_cluster.py
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
