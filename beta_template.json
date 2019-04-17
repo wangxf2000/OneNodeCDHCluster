@@ -505,7 +505,7 @@
 		},
 		{
 		    "name": "cdsw.domain.config",
-		    "value": "cdsw.YourCDSWDomain.nip.io"
+		    "value": "cdsw.YourPublicIP.nip.io"
 		},
 		{
 		    "name": "cdsw.master.ip.config",
