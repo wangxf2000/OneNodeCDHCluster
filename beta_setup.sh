@@ -1,7 +1,5 @@
 #! /bin/bash
 
-set -x
-
 echo "-- Configure the OS"
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
@@ -17,7 +15,8 @@ yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
 # Check input parameters
 case "$1" in
         aws)
-            CDSW_DOMAIN=`curl http://169.254.169.254/latest/meta-data/public-hostname`
+            # just get the Public IP
+            CDSW_DOMAIN=`dig +short myip.opendns.com @resolver1.opendns.com`
             ;;
          
         azure)
@@ -28,7 +27,7 @@ case "$1" in
             ;;
          
         gcp)
-            # just get the Public I
+            # just get the Public IP
             CDSW_DOMAIN=`dig +short myip.opendns.com @resolver1.opendns.com`
             ;;
             
@@ -42,12 +41,7 @@ case "$1" in
             exit 1           
 esac
 
-#if [ -z $2 ]
-#then
-#    TEMPLATE="default_template.json"
-#else
-    TEMPLATE=$2
-#fi
+TEMPLATE=$2
 
 # ugly, but for now the docker device has to be put by the user
 DOCKERDEVICE=$3
@@ -122,9 +116,9 @@ pip install --upgrade pip
 pip install cm_client
 
 sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourCDSWDomain/$(CDSW_DOMAIN)/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourPublicIP/$CDSW_DOMAIN/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourPrivateIP/`hostname -i`/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourDockerDevice/$(DOCKERDEVICE)/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourDockerDevice/$DOCKERDEVICE/g" ~/OneNodeCDHCluster/$TEMPLATE
 
 sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/create_cluster.py
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
