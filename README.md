@@ -21,13 +21,16 @@ As this cluster is meant to be used for demos, experimenting, training, and work
 $ sudo su -
 $ yum install -y git
 $ git clone https://github.com/fabiog1901/OneNodeCDHCluster.git
-$ chmod +x OneNodeCDHCluster/setup.sh
+$ cd OneNodeCDHCluster
+$ chmod +x setup.sh
 ```
 
-The script `setup.sh` takes the cloud provider name as a parameter: `aws`,`azure`,`gcp`, for example:
+The script `setup.sh` takes 2 arguments:
+- the cloud provider name: `aws`,`azure`,`gcp`.
+- the template file, defaults to `default_template.json`
 
 ```
-$ ./OneNodeCDHCluster/setup.sh aws
+$ ./setup.sh aws default_template.json
 ```
 Wait until the script finishes, check for any error.
 
