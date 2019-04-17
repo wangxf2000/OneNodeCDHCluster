@@ -15,18 +15,18 @@ yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
 # Check input parameters
 case "$1" in
         aws)
-            PUBLIC_IP_DNS=`dig +short myip.opendns.com @resolver1.opendns.com`
+            PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
             # curl http://169.254.169.254/latest/meta-data/public-hostname
             ;;
          
         azure)
             curl -sSL https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-bootstrap-scripts/os-generic-bootstrap.sh | sh
             sleep 10
-            PUBLIC_IP_DNS=`dig +short myip.opendns.com @resolver1.opendns.com`
+            PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
             ;;
          
         gcp)
-            PUBLIC_IP_DNS=`dig +short myip.opendns.com @resolver1.opendns.com`
+            PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
             ;;
             
         openstack)
@@ -34,17 +34,20 @@ case "$1" in
             exit 1
             ;;         
         *)
-            echo $"Usage: $0 {aws|azure|gcp} [template-file]"
+            echo $"Usage: $0 {aws|azure|gcp} [template-file] docker-device"
+            echo $"example: ./setup.sh aws default_template.json /dev/xvdb"
             exit 1           
 esac
 
-if [ -z $2 ]
-then
-    TEMPLATE="default_template.json"
-else
+#if [ -z $2 ]
+#then
+#    TEMPLATE="default_template.json"
+#else
     TEMPLATE=$2
-fi
+#fi
 
+# ugly, but for now the docker device has to be put by the user
+DOCKERDEVICE=$3
 
 echo "-- Configure networking"
 hostnamectl set-hostname `hostname -f`
@@ -115,10 +118,12 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-YourPublicHostName
 sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourPublicHostName/$PUBLIC_IP_DNS/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourHostName/$PUBLIC_IP_DNS/g" ~/OneNodeCDHCluster/create_cluster.py
+sed -i "s/YourCDSWDomain/$PUBLIC_IP/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourPrivateIP/`hostname -i`/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourDockerDevice/$DOCKERDEVICE`/g" ~/OneNodeCDHCluster/$TEMPLATE
+
+sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/create_cluster.py
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
