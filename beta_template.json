@@ -7,6 +7,9 @@
             "cardinality": 1.0,
             "refName": "HostTemplate-0-from-YourHostName",
             "roleConfigGroupsRefNames": [
+                "cdsw-CDSW_APPLICATION-BASE",
+	        "cdsw-CDSW_DOCKER-BASE",
+                "cdsw-CDSW_MASTER-BASE",
                 "hdfs-BALANCER-BASE",
                 "hdfs-DATANODE-BASE",
                 "hdfs-NAMENODE-BASE",
@@ -105,8 +108,16 @@
     },
     "products": [
         {
-                "product": "CFM",
-                "version": "1.0.0.0"
+	    "product": "Anaconda",
+	    "version": "5.1.0.1"
+        },
+        {
+            "product": "CDSW",
+            "version": "1.5.0.p1.849870"
+        },
+        {
+            "product": "CFM",
+            "version": "1.0.0.0"
         },
         {
             "product": "CDH",
@@ -115,7 +126,9 @@
     ],
     "repositories": [
         "https://archive.cloudera.com/cdh6/{latest_supported}/parcels/",
-        "https://archive.cloudera.com/CFM/parcels/1.0.0.0/"
+        "https://archive.cloudera.com/CFM/parcels/1.0.0.0/",
+        "https://repo.continuum.io/pkgs/misc/parcels/archive/",
+        "https://archive.cloudera.com/cdsw1/1.5.0/parcels/"
     ],
     "services": [
         {
@@ -330,25 +343,37 @@
             "serviceType": "IMPALA"
         },
         {
-            "refName": "yarn",
-            "roleConfigGroups": [
-                {
-                    "base": true,
-                    "refName": "yarn-RESOURCEMANAGER-BASE",
-                    "roleType": "RESOURCEMANAGER"
-                },
-                {
-                    "base": true,
-                    "refName": "yarn-NODEMANAGER-BASE",
-                    "roleType": "NODEMANAGER"
-                },
-                {
-                    "base": true,
-                    "refName": "yarn-JOBHISTORY-BASE",
-                    "roleType": "JOBHISTORY"
-                }
-            ],
-            "serviceType": "YARN"
+	    "refName": "yarn",
+	    "roleConfigGroups": [
+		{
+		    "base": true,
+		    "configs": [
+			{
+			    "name": "yarn_scheduler_maximum_allocation_mb",
+			    "value": "6144"
+			}
+		    ],
+		    "refName": "yarn-RESOURCEMANAGER-BASE",
+		    "roleType": "RESOURCEMANAGER"
+		},
+		{
+		    "base": true,
+		    "configs": [
+			{
+			    "name": "yarn_nodemanager_resource_memory_mb",
+			    "value": "6144"
+			}
+		    ],
+		    "refName": "yarn-NODEMANAGER-BASE",
+		    "roleType": "NODEMANAGER"
+		},
+		{
+		    "base": true,
+		    "refName": "yarn-JOBHISTORY-BASE",
+		    "roleType": "JOBHISTORY"
+		}
+	    ],
+	    "serviceType": "YARN"
         },
         {
             "refName": "hive",
@@ -435,6 +460,59 @@
 		}
 	    ],
 	    "serviceType": "NIFI"
+        },
+	{
+	    "refName": "cdsw",
+	    "roleConfigGroups": [
+		{
+		    "base": true,
+		    "refName": "cdsw-CDSW_APPLICATION-BASE",
+		    "roleType": "CDSW_APPLICATION"
+		},
+		{
+		    "base": true,
+		    "refName": "cdsw-CDSW_MASTER-BASE",
+		    "roleType": "CDSW_MASTER"
+		},
+		{
+		    "base": true,
+		    "configs": [
+			{
+			    "name": "cdsw.docker.devices.config",
+			    "value": "YourDockerDevice"
+			}
+		    ],
+		    "refName": "cdsw-CDSW_DOCKER-BASE",
+		    "roleType": "CDSW_DOCKER"
+		}
+	    ],
+	    "serviceConfigs": [
+		{
+		    "name": "yarn_service",
+		    "ref": "yarn"
+		},
+		{
+		    "name": "hdfs_service",
+		    "ref": "hdfs"
+		},
+		{
+		    "name": "hive_service",
+		    "ref": "hive"
+		},
+		{
+		    "name": "spark_on_yarn_service",
+		    "ref": "spark_on_yarn"
+		},
+		{
+		    "name": "cdsw.domain.config",
+		    "value": "cdsw.YourCDSWDomain.nip.io"
+		},
+		{
+		    "name": "cdsw.master.ip.config",
+		    "value": "YourPrivateIP"
+		}
+	    ],
+	    "serviceType": "CDSW"
         }
     ]
 }
