@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -v
+
 echo "-- Configure the OS"
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
