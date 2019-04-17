@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -v
+set -x
 
 echo "-- Configure the OS"
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
