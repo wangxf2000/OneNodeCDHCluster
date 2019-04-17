@@ -118,7 +118,7 @@ pip install cm_client
 sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourPublicIP/$CDSW_DOMAIN/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourPrivateIP/`hostname -i`/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourDockerDevice/$DOCKERDEVICE/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ~/OneNodeCDHCluster/$TEMPLATE
 
 sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/create_cluster.py
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
