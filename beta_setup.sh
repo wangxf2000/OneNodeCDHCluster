@@ -15,18 +15,19 @@ yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
 # Check input parameters
 case "$1" in
         aws)
-            PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
-            # curl http://169.254.169.254/latest/meta-data/public-hostname
+            CDSW_DOMAIN=`curl http://169.254.169.254/latest/meta-data/public-hostname`
             ;;
          
         azure)
             curl -sSL https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-bootstrap-scripts/os-generic-bootstrap.sh | sh
             sleep 10
-            PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
+            # just get the Public IP
+            CDSW_DOMAIN=`dig +short myip.opendns.com @resolver1.opendns.com`
             ;;
          
         gcp)
-            PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
+            # just get the Public I
+            CDSW_DOMAIN=`dig +short myip.opendns.com @resolver1.opendns.com`
             ;;
             
         openstack)
@@ -119,7 +120,7 @@ pip install --upgrade pip
 pip install cm_client
 
 sed -i "s/YourHostName/`hostname`/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourCDSWDomain/$PUBLIC_IP/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourCDSWDomain/$CDSW_DOMAIN/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourPrivateIP/`hostname -i`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourDockerDevice/$DOCKERDEVICE`/g" ~/OneNodeCDHCluster/$TEMPLATE
 
