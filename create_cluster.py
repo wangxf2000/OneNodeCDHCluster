@@ -52,7 +52,7 @@ with open ("/root/myRSAkey", "r") as f:
     key = f.read()
 
 
-instargs = cm_client.ApiHostInstallArguments(host_names=['YourHostName'], 
+instargs = cm_client.ApiHostInstallArguments(host_names=['YourHostname'], 
                                              user_name='root', 
                                              private_key=key, 
                                              cm_repo_url='https://archive.cloudera.com/cm6/6.2.0', 
