@@ -43,7 +43,7 @@
         "clusterName": "OneNodeCluster",
         "hosts": [
             {
-                "hostName": "YourHostName",
+                "hostName": "YourHostname",
                 "hostTemplateRefName": "HostTemplate-0-from-YourHostname"
             }
         ],
