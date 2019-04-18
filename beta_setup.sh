@@ -35,7 +35,7 @@ case "$1" in
             exit 1           
 esac
 
-PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com  | tr -d '[:space:]'`
+PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
 TEMPLATE=$2
 # ugly, but for now the docker device has to be put by the user
 DOCKERDEVICE=$3
@@ -109,12 +109,12 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-sed -i "s/YourHostname/`hostname -f | tr -d '[:space:]'`/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourCDSWDomain/cdsw.$PUBLIC_IP.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourPrivateIP/`hostname -I | tr -d '[:space:]'`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ~/OneNodeCDHCluster/$TEMPLATE
 
-sed -i "s/YourHostname/`hostname -f | tr -d '[:space:]'`/g" ~/OneNodeCDHCluster/create_cluster.py
+sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/create_cluster.py
 
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
