@@ -109,11 +109,12 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-sed -i "s/YourHostname/$PUBLIC_IP/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourCDSWDomain/cdsw.$PUBLIC_IP.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourPrivateIP/`hostname -I`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ~/OneNodeCDHCluster/$TEMPLATE
 
-sed -i "s/YourHostname/$PUBLIC_IP/g" ~/OneNodeCDHCluster/create_cluster.py
+sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/create_cluster.py
 
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
