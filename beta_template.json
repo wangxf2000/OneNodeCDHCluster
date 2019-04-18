@@ -504,9 +504,14 @@
 		    "ref": "spark_on_yarn"
 		},
 		{
-		    "name": "cdsw.domain.config",
-		    "value": "YourCDSWDomain"
-		}
+                    "name": "cdsw.domain.config",
+                    "value": "YourCDSWDomain"
+                },
+                {
+                    "name": "cdsw.master.ip.config",
+                    "value": "YourPrivateIP"
+                }
+
 	    ],
 	    "serviceType": "CDSW"
         }
