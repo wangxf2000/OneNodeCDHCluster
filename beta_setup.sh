@@ -30,17 +30,25 @@ case "$1" in
             exit 1
             ;;         
         *)
-            echo $"Usage: $0 {aws|azure|gcp} [template-file] docker-device"
-            echo $"example: ./setup.sh aws default_template.json /dev/xvdb"
+            echo $"Usage: $0 {aws|azure|gcp} [template-file] [docker-device]"
+            echo $"example: ./setup.sh gcp"
+            echo $"example: ./setup.sh azure default_template.json"
+            echo $"example: ./setup.sh aws cdsw_template.json /dev/xvdb"
             exit 1           
 esac
 
-PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
-TEMPLATE=$2
+if [ -z $2 ]
+then
+    TEMPLATE="default_template.json"
+else
+    TEMPLATE=$2
+fi
 # ugly, but for now the docker device has to be put by the user
 DOCKERDEVICE=$3
 
+
 echo "-- Configure networking"
+PUBLIC_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
 hostnamectl set-hostname `hostname -f`
 echo "`hostname -I` `hostname`" >> /etc/hosts
 sed -i "s/HOSTNAME=.*/HOSTNAME=`hostname`/" /etc/sysconfig/network
