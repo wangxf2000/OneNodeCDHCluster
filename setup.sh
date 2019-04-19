@@ -37,12 +37,7 @@ case "$1" in
             exit 1           
 esac
 
-if [ -z $2 ]
-then
-    TEMPLATE="default_template.json"
-else
-    TEMPLATE=$2
-fi
+TEMPLATE=$2
 # ugly, but for now the docker device has to be put by the user
 DOCKERDEVICE=$3
 
