@@ -30,7 +30,7 @@ case "$1" in
             exit 1
             ;;         
         *)
-            echo $"Usage: $0 {aws|azure|gcp} [template-file] [docker-device]"
+            echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
             echo $"example: ./setup.sh gcp"
             echo $"example: ./setup.sh azure default_template.json"
             echo $"example: ./setup.sh aws cdsw_template.json /dev/xvdb"
