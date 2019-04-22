@@ -2,20 +2,20 @@
 
 This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 14 services: 
 
-- CDSW,
-- NiFi, 
-- NiFi CA, 
-- NiFi Registry, 
-- Kafka, 
-- Kudu, 
-- Impala, 
-- Hue, 
-- Hive, 
-- Spark, 
-- Oozie,
-- HDFS, 
-- YARN,
-- ZK. 
+- CDSW
+- NiFi 
+- NiFi CA
+- NiFi Registry 
+- Kafka
+- Kudu 
+- Impala 
+- Hue
+- Hive 
+- Spark 
+- Oozie
+- HDFS 
+- YARN
+- ZK 
 
 More services can be added or removed by updating the template used.
 
