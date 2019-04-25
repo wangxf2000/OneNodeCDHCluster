@@ -73,9 +73,11 @@ Wait for about 20-30 mins for CDSW to be ready. You can monitor the status of CD
 
 You can use `kubectl get pods -n kube-system` to check if all the pods that the role `Master` is suppose to start have really started.
 
+You can also check the CDSW deployment status on CM > CDSW service > Instances > Master role > Processes > stdout.
+
 ## Troubleshooting and known issues
 
-- CDSW service will issue a red alert `HTTP port check timed out after 60 seconds.`. You can disregard that.
+- CDSW service will issue a red alert `HTTP port check timed out after 60 seconds.`. You can disregard that, or add the instance IP to the Security Group, so that inbound traffic from the instance's own IP address is allowed.
 
 ### Docker device
 
