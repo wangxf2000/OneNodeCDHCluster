@@ -33,6 +33,7 @@ Below are instructions for creating the cluster with or without CDSW service. CD
 - Create a Centos 7 VM with at least 8 vCPUs/ 32GB RAM.
 - OS disk size: at least 100 GB.
 - Docker device disk: at least 200GB SSD disk.
+  - Node: you need a fast disk more than you need a large disk: aim for a disk with 3000 IOPS. THis might mean choosing a 1TB disk. 
 
 ### Configuration and installation
 - If you created the VM on Azure and need to resize the OS disk, here are the [instructions](how-to-resize-os-disk.md).
