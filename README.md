@@ -26,11 +26,11 @@ As this cluster is meant to be used for demos, experimenting, training, and work
 Below are instructions for creating the cluster with or without CDSW service. CDSW requires some extra resources (more powerful instance, and a secondary disk for the docker device). 
 
 ### Provisioning Cluster without CDSW
-- Create a Centos 7 VM with at least 4 vCPUs/ 16GB RAM.
+- Create a Centos 7 VM with at least 8 vCPUs/ 32 GB RAM.
 - OS disk size: at least 50 GB.
 
 ### Provisioning Cluster with CDSW
-- Create a Centos 7 VM with at least 8 vCPUs/ 32GB RAM.
+- Create a Centos 7 VM with at least 16 vCPUs/ 64 GB RAM.
 - OS disk size: at least 100 GB.
 - Docker device disk: at least 200GB SSD disk.
   - Node: you need a fast disk more than you need a large disk: aim for a disk with 3000 IOPS. This might mean choosing a 1TB disk. 
