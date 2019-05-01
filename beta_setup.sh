@@ -57,8 +57,7 @@ echo "-- Install CM and MySQL"
 wget https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
 rpm --import https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/RPM-GPG-KEY-cloudera
 wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
-rpm -ivh mysql-community-release-el7-5.noarch.rpm
-yum update
+yes | rpm -ivh mysql-community-release-el7-5.noarch.rpm
 yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server mysql-server #mariadb-server
 
 #cat mariadb.config > /etc/my.cnf
