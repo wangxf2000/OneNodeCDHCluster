@@ -93,6 +93,27 @@ wget https://archive.cloudera.com/cdsw1/1.5.0/csd/CLOUDERA_DATA_SCIENCE_WORKBENC
 chown cloudera-scm:cloudera-scm /opt/cloudera/csd/*
 chmod 644 /opt/cloudera/csd/*
 
+echo "-- Install CEM Tarballs"
+mkdir -p /opt/cloudera/cem
+wget https://archive.cloudera.com/CEM/centos7/1.x/updates/1.0.0.0/CEM-1.0.0.0-centos7-tars-tarball.tar.gz -P /opt/cloudera/cem
+tar xvzf /opt/cloudera/cem/CEM-1.0.0.0-centos7-tars-tarball.tar.gz -C /opt/cloudera/cem
+tar xvzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/efm/efm-1.0.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
+tar xvzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/minifi/minifi-0.6.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
+tar xvzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/minifi/minifi-toolkit-0.6.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
+rm -f /opt/cloudera/cem/CEM-1.0.0.0-centos7-tars-tarball.tar.gz
+ln -s /opt/cloudera/cem/efm-1.0.0.1.0.0.0-54 /opt/cloudera/cem/efm
+ln -s /opt/cloudera/cem/minifi-0.6.0.1.0.0.0-54 /opt/cloudera/cem/minifi
+ln -s /opt/cloudera/cem/efm/bin/efm.sh /etc/init.d/efm
+chown -R root:root /opt/cloudera/cem/efm-1.0.0.1.0.0.0-54
+chown -R root:root /opt/cloudera/cem/minifi-0.6.0.1.0.0.0-54
+chown -R root:root /opt/cloudera/cem/minifi-toolkit-0.6.0.1.0.0.0-54
+rm -f /opt/cloudera/cem/efm/conf/efm.properties
+cp ~/OneNodeCDHCluster/efm.properties /opt/cloudera/cem/efm/conf
+rm -f /opt/cloudera/cem/minifi/conf/bootstrap.conf
+cp ~/OneNodeCDHCluster/bootstrap.conf /opt/cloudera/cem/minifi/conf
+/opt/cloudera/cem/minifi/bin/minifi.sh install
+
+
 echo "-- Enable passwordless root login via rsa key"
 ssh-keygen -f ~/myRSAkey -t rsa -N ""
 mkdir ~/.ssh
@@ -126,5 +147,9 @@ sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/create_cluster.py
 
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
+
+# configure and start EFM and Minifi
+systemctl efm start
+#systemctl efm minifi
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
