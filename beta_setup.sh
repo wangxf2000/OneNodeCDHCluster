@@ -70,7 +70,7 @@ cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
 # http://downloads.mariadb.org/mariadb/repositories/
 [mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/10.0/centos7-amd64
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 EOF
@@ -79,9 +79,7 @@ yum install -y MariaDB-server MariaDB-client
 cat mariadb.config > /etc/my.cnf
 
 
-echo "--Enable and start MariaDB"
-#systemctl enable mysqld
-#systemctl start mysqld
+echo "--Enable and start MariaDB/MySQL"
 systemctl enable mariadb
 systemctl start mariadb
 
@@ -164,7 +162,7 @@ sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/create_cluster.py
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
 # configure and start EFM and Minifi
-systemctl efm start
-systemctl efm minifi
+systemctl start efm
+systemctl start minifi
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
