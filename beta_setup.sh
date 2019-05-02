@@ -53,21 +53,37 @@ systemctl stop firewalld
 setenforce 0
 sed -i 's/SELINUX=.*/SELINUX=permissive/' /etc/selinux/config
 
-echo "-- Install CM and MySQL"
+echo "-- Install CM"
 wget https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
-rpm --import https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/RPM-GPG-KEY-cloudera
-wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
-yes | rpm -ivh mysql-community-release-el7-5.noarch.rpm
-yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server mysql-server #mariadb-server
+yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
 
-#cat mariadb.config > /etc/my.cnf
-cat mysql.config > /etc/my.cnf
+## MySQL
+#rpm --import https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/RPM-GPG-KEY-cloudera
+#wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+#yes | rpm -ivh mysql-community-release-el7-5.noarch.rpm
+#yum install -y mysql-server
+#cat mysql.config > /etc/my.cnf
+
+## MariaDB 10
+cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
+# MariaDB 10.3 CentOS repository list - created 2019-05-02 00:46 UTC
+# http://downloads.mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.3/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+EOF
+
+yum install -y MariaDB-server MariaDB-client
+cat mariadb.config > /etc/my.cnf
+
 
 echo "--Enable and start MariaDB"
-systemctl enable mysqld
-systemctl start mysqld
-#systemctl enable mariadb
-#systemctl start mariadb
+#systemctl enable mysqld
+#systemctl start mysqld
+systemctl enable mariadb
+systemctl start mariadb
 
 echo "-- Install JDBC connector"
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz -P ~
