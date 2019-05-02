@@ -64,13 +64,13 @@ yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-
 #yum install -y mysql-server
 #cat mysql.config > /etc/my.cnf
 
-## MariaDB 10
+## MariaDB 10.0
 cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
 # MariaDB 10.3 CentOS repository list - created 2019-05-02 00:46 UTC
 # http://downloads.mariadb.org/mariadb/repositories/
 [mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/10.3/centos7-amd64
+baseurl = http://yum.mariadb.org/10.0/centos7-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 EOF
@@ -111,10 +111,10 @@ chmod 644 /opt/cloudera/csd/*
 echo "-- Install CEM Tarballs"
 mkdir -p /opt/cloudera/cem
 wget https://archive.cloudera.com/CEM/centos7/1.x/updates/1.0.0.0/CEM-1.0.0.0-centos7-tars-tarball.tar.gz -P /opt/cloudera/cem
-tar xvzf /opt/cloudera/cem/CEM-1.0.0.0-centos7-tars-tarball.tar.gz -C /opt/cloudera/cem
-tar xvzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/efm/efm-1.0.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
-tar xvzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/minifi/minifi-0.6.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
-tar xvzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/minifi/minifi-toolkit-0.6.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
+tar xzf /opt/cloudera/cem/CEM-1.0.0.0-centos7-tars-tarball.tar.gz -C /opt/cloudera/cem
+tar xzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/efm/efm-1.0.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
+tar xzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/minifi/minifi-0.6.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
+tar xzf /opt/cloudera/cem/CEM/centos7/1.0.0.0-54/tars/minifi/minifi-toolkit-0.6.0.1.0.0.0-54-bin.tar.gz -C /opt/cloudera/cem
 rm -f /opt/cloudera/cem/CEM-1.0.0.0-centos7-tars-tarball.tar.gz
 ln -s /opt/cloudera/cem/efm-1.0.0.1.0.0.0-54 /opt/cloudera/cem/efm
 ln -s /opt/cloudera/cem/minifi-0.6.0.1.0.0.0-54 /opt/cloudera/cem/minifi
@@ -165,6 +165,6 @@ python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
 # configure and start EFM and Minifi
 systemctl efm start
-#systemctl efm minifi
+systemctl efm minifi
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
