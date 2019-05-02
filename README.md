@@ -37,7 +37,9 @@ Below are instructions for creating the cluster with or without CDSW service. CD
 
 ### Configuration and installation
 - If you created the VM on Azure and need to resize the OS disk, here are the [instructions](how-to-resize-os-disk.md).
-- add inbound rule to the Security Group to allow your IP only, for all ports.
+- add 2 inbound rules to the Security Group:
+  - to allow your IP only, for all ports.
+  - to allow the VM's own IP, for all ports.
 - ssh into VM and copy this repo.
 
 ```
@@ -77,7 +79,6 @@ You can also check the CDSW deployment status on CM > CDSW service > Instances >
 
 ## Troubleshooting and known issues
 
-- CDSW service will issue a red alert `HTTP port check timed out after 60 seconds.`. You can disregard that, or add the instance IP to the Security Group, so that inbound traffic from the instance's own IP address is allowed.
 
 ### Docker device
 
