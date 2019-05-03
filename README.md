@@ -1,8 +1,10 @@
 # One Node EDGE2AI CDH Cluster
 
-This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 14 services: 
+This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 16 services: 
 
 - CDSW
+- MiNiFi
+- EFM
 - NiFi 
 - NiFi CA
 - NiFi Registry 
@@ -85,18 +87,18 @@ You can also check the CDSW deployment status on CM > CDSW service > Instances >
 To find out what the docker device mount point is, use `lsblk`. See below examples:
 
 
-AWS, using a M5.2xlarge
+AWS, using a M5.2xlarge or M5.4xlarge
 ```
 $ lsblk
 NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 nvme0n1     259:1    0  100G  0 disk
 +-nvme0n1p1 259:2    0  100G  0 part /
-nvme1n1     259:0    0  200G  0 disk
+nvme1n1     259:0    0 1000G  0 disk
 
 $ ./setup.sh aws cdsw_template.json /dev/nvme1n1
 ```
 
-Azure Standard DS4 v2
+Azure Standard D8s v3 or Standard D16s v3 
 ```
 $ lsblk
 NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
@@ -106,19 +108,19 @@ sda      8:0    0   30G  0 disk
 +-sda2   8:2    0 29.5G  0 part /
 sdb      8:16   0   56G  0 disk
 +-sdb1   8:17   0   56G  0 part /mnt/resource
-sdc      8:32   0  200G  0 disk
+sdc      8:32   0 1000G  0 disk
 sr0     11:0    1  628K  0 rom
 
 $ ./setup.sh azure cdsw_template.json /dev/sdc
 ```
 
-GCP n1-standard-8
+GCP n1-standard-8 or n1-standard-16
 ```
 $ lsblk
 NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda      8:0    0  100G  0 disk 
 └─sda1   8:1    0  100G  0 part /
-sdb      8:16   0  200G  0 disk 
+sdb      8:16   0 1000G  0 disk 
 
 $ ./setup.sh gcp cdsw_template.json /dev/sdb
 ```
