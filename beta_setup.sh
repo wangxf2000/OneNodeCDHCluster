@@ -64,10 +64,8 @@ yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-
 #yum install -y mysql-server
 #cat mysql.config > /etc/my.cnf
 
-## MariaDB 10.0
+## MariaDB 10.1
 cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
-# MariaDB 10.3 CentOS repository list - created 2019-05-02 00:46 UTC
-# http://downloads.mariadb.org/mariadb/repositories/
 [mariadb]
 name = MariaDB
 baseurl = http://yum.mariadb.org/10.1/centos7-amd64
@@ -79,7 +77,7 @@ yum install -y MariaDB-server MariaDB-client
 cat mariadb.config > /etc/my.cnf
 
 
-echo "--Enable and start MariaDB/MySQL"
+echo "--Enable and start MariaDB"
 systemctl enable mariadb
 systemctl start mariadb
 
