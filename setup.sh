@@ -16,15 +16,14 @@ yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
 case "$1" in
         aws)
             ;;
-
         azure)
             curl -sSL https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-bootstrap-scripts/os-generic-bootstrap.sh | sh
             sleep 10
+            umount /mnt/resource
+            mount /dev/sdb1 /opt
             ;;
-
         gcp)
             ;;
-
         openstack)
             echo "Not supported yet!"
             exit 1
