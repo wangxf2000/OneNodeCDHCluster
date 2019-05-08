@@ -81,6 +81,8 @@ You can also check the CDSW deployment status on CM > CDSW service > Instances >
 
 ## Troubleshooting and known issues
 
+**Clock Offset**: the NTPD service which is required by Kudu and the Host is not installed. For the moment, just put
+`--use-hybrid-clock=false`  in Kudu's Configuration property `Kudu Service Advanced Configuration Snippet (Safety Valve) for gflagfile` and suppressed all other warnings.
 
 ### Docker device
 
