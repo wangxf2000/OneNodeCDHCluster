@@ -50,7 +50,7 @@ iptables-save > ~/firewall.rules
 systemctl disable firewalld
 systemctl stop firewalld
 setenforce 0
-sed -i 's/SELINUX=.*/SELINUX=permissive/' /etc/selinux/config
+sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 
 echo "-- Install CM"
 wget https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
