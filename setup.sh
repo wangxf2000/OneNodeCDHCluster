@@ -1,9 +1,11 @@
 #! /bin/bash
 
 echo "-- Configure the OS"
-echo never > /sys/kernel/mm/transparent_hugepage/defrag
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
-# TODO make 2 above commands to be permanent
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.d/rc.local
+echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >> /etc/rc.d/rc.local
+# add tuned optimization https://www.cloudera.com/documentation/enterprise/6/6.2/topics/cdh_admin_performance.html
 echo  "vm.swappiness = 1" >> /etc/sysctl.conf
 sysctl vm.swappiness=1
 # CDSW requires Centos 7.5, so we trick it to believe it is...
