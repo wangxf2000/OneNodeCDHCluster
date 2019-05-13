@@ -17,6 +17,7 @@ yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
 # Check input parameters
 case "$1" in
         aws)
+            echo "server 169.254.169.123 prefer iburst minpoll 4 maxpoll 4" >> /etc/chrony.conf
             ;;
         azure)
             curl -sSL https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-bootstrap-scripts/os-generic-bootstrap.sh | sh
