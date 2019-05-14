@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo "-- Configure the OS"
+echo "-- Configure and optimize the OS"
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
 echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.d/rc.local
@@ -33,7 +33,6 @@ case "$1" in
             ;;
         *)
             echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
-            echo $"example: ./setup.sh gcp"
             echo $"example: ./setup.sh azure default_template.json"
             echo $"example: ./setup.sh aws cdsw_template.json /dev/xvdb"
             exit 1
