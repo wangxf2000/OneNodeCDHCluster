@@ -8,6 +8,7 @@ echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >> /etc/rc.d/rc.l
 # add tuned optimization https://www.cloudera.com/documentation/enterprise/6/6.2/topics/cdh_admin_performance.html
 echo  "vm.swappiness = 1" >> /etc/sysctl.conf
 sysctl vm.swappiness=1
+timedatectl set-timezone UTC
 # CDSW requires Centos 7.5, so we trick it to believe it is...
 echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 
