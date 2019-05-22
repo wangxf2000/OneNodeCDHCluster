@@ -164,7 +164,7 @@ sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/create_cluster.py
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
 # configure and start EFM and Minifi
-systemctl start efm
-systemctl start minifi
+service efm start
+service minifi start
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
