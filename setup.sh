@@ -1,5 +1,71 @@
 #! /bin/bash
+networkmanager_7()
+{
+cat > /etc/NetworkManager/dispatcher.d/12-register-dns <<"EOF"
+#!/bin/bash
+# NetworkManager Dispatch script
+# Deployed by Cloudera Altus Director Bootstrap
+#
+# Expected arguments:
+#    $1 - interface
+#    $2 - action
+#
+# See for info: http://linux.die.net/man/8/networkmanager
 
+# Register A and PTR records when interface comes up
+# only execute on the primary nic
+if [ "$1" != "eth0" ] || [ "$2" != "up" ]
+then
+    exit 0;
+fi
+
+# when we have a new IP, perform nsupdate
+new_ip_address="$DHCP4_IP_ADDRESS"
+
+host=$(hostname -s)
+domain=$(nslookup $(grep -i nameserver /etc/resolv.conf | cut -d ' ' -f 2) | grep -i name | cut -d ' ' -f 3 | cut -d '.' -f 2- | rev | cut -c 2- | rev)
+IFS='.' read -ra ipparts <<< "$new_ip_address"
+ptrrec="$(printf %s "$new_ip_address." | tac -s.)in-addr.arpa"
+nsupdatecmds=$(mktemp -t nsupdate.XXXXXXXXXX)
+resolvconfupdate=$(mktemp -t resolvconfupdate.XXXXXXXXXX)
+echo updating resolv.conf
+grep -iv "search" /etc/resolv.conf > "$resolvconfupdate"
+echo "search $domain" >> "$resolvconfupdate"
+cat "$resolvconfupdate" > /etc/resolv.conf
+echo "Attempting to register $host.$domain and $ptrrec"
+{
+    echo "update delete $host.$domain a"
+    echo "update add $host.$domain 600 a $new_ip_address"
+    echo "send"
+    echo "update delete $ptrrec ptr"
+    echo "update add $ptrrec 600 ptr $host.$domain"
+    echo "send"
+} > "$nsupdatecmds"
+nsupdate "$nsupdatecmds"
+exit 0;
+EOF
+chmod 755 /etc/NetworkManager/dispatcher.d/12-register-dns
+service network restart
+
+# Confirm DNS record has been updated, retry if update did not work
+i=0
+until [ $i -ge 5 ]
+do
+    sleep 5
+    i=$((i+1))
+    hostname | nslookup && break
+    service network restart
+done
+
+if [ $i -ge 5 ]; then
+    echo "DNS update failed"
+    exit 1
+fi
+}
+
+################
+# MAIN PROGRAM # 
+################
 echo "-- Configure and optimize the OS"
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
@@ -22,7 +88,7 @@ case "$1" in
             systemctl restart chronyd
             ;;
         azure)
-            curl -sSL https://raw.githubusercontent.com/cloudera/director-scripts/master/azure-bootstrap-scripts/os-generic-bootstrap.sh | sh
+            networkmanager_7
             sleep 10
             umount /mnt/resource
             mount /dev/sdb1 /opt
