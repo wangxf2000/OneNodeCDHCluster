@@ -73,7 +73,7 @@ Wait until the script finishes, check for any error.
 
 Once the script returns, you can open Cloudera Manager at [http://\<public-IP\>:7180](http://<public-IP>:7180)
 
-Wait for about 20-30 mins for CDSW to be ready. You can monitor the status of CDSW by issuing the `cdsw-status` command.
+Wait for about 20-30 mins for CDSW to be ready. You can monitor the status of CDSW by issuing the `cdsw status` command.
 
 You can use `kubectl get pods -n kube-system` to check if all the pods that the role `Master` is suppose to start have really started.
 
