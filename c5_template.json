@@ -534,8 +534,8 @@
                "ref":"hive"
             },
             {
-               "name":"spark_on_yarn_service",
-               "ref":"spark_on_yarn"
+               "name":"spark2_on_yarn_service",
+               "ref":"spark2_on_yarn"
             },
             {
                "name":"cdsw.domain.config",
