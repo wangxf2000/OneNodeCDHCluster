@@ -138,7 +138,7 @@
       "https://repo.continuum.io/pkgs/misc/parcels/archive/",
       "https://archive.cloudera.com/cdsw1/1.5.0/parcels/",
       "https://archive.cloudera.com/kafka/parcels/latest/",
-      "http://archive.cloudera.com/spark2/parcels/2.4.0.cloudera1/"
+      "https://archive.cloudera.com/spark2/parcels/2.4.0.cloudera1/"
    ],
    "services":[
       {
