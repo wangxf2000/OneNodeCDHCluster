@@ -38,7 +38,7 @@ Below are instructions for creating the cluster with or without CDSW service. CD
   - Node: you need a fast disk more than you need a large disk: aim for a disk with 3000 IOPS. This might mean choosing a 1TB disk. 
 
 ### Configuration and installation
-- If you created the VM on Azure and need to resize the OS disk, here are the [instructions](how-to-resize-os-disk.md).
+- If you created the VM on Azure and need to resize the OS disk, here are the [instructions](scripts/how-to-resize-os-disk.md).
 - add 2 inbound rules to the Security Group:
   - to allow your IP only, for all ports.
   - to allow the VM's own IP, for all ports.
