@@ -89,8 +89,8 @@ case "$1" in
             systemctl restart chronyd
             ;;
         azure)
-            networkmanager_7
-            sleep 10
+            #networkmanager_7
+            #sleep 10
             umount /mnt/resource
             mount /dev/sdb1 /opt
             ;;
@@ -142,6 +142,8 @@ baseurl = http://yum.mariadb.org/10.1/centos7-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 EOF
+
+yum repolist
 
 yum install -y MariaDB-server MariaDB-client
 cat mariadb.config > /etc/my.cnf
