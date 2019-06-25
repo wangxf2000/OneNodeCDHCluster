@@ -26,9 +26,13 @@ case "$1" in
             ;;
         gcp)
             ;;
-        openstack)
-            echo "Not supported yet!"
-            exit 1
+        ibm)
+            # IBM image doesn't have ntpd or chronyd installed
+            yum -y install chrony
+            systemctl enable chronyd
+            systemctl start chronyd
+            # need to erase local etc hosts file..
+            echo "127.0.0.1    localhost" > /etc/hosts
             ;;
         *)
             echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
