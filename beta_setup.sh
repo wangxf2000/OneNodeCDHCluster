@@ -32,7 +32,8 @@ case "$1" in
             systemctl enable chronyd
             systemctl start chronyd
             # need to erase local etc hosts file..
-            echo "127.0.0.1    localhost" > /etc/hosts
+            echo "127.0.0.1 localhost.localdomain localhost" > /etc/hosts
+            echo "127.0.0.1 localhost4.localdomain4 localhost4" >> /etc/hosts
             ;;
         *)
             echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
