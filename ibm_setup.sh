@@ -14,23 +14,10 @@ echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 echo "-- Install Java OpenJDK8 and other tools"
 yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
 
-# Check input parameters
-case "$1" in
-        ibm)
-            # IBM image doesn't have ntpd or chronyd installed
-            yum -y install chrony
-            systemctl enable chronyd
-            systemctl start chronyd
-            # need to erase local etc hosts file..
-            echo "127.0.0.1 localhost.localdomain localhost" > /etc/hosts
-            echo "127.0.0.1 localhost4.localdomain4 localhost4" >> /etc/hosts
-            ;;
-        *)
-            echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
-            echo $"example: ./setup.sh azure default_template.json"
-            echo $"example: ./setup.sh aws cdsw_template.json /dev/xvdb"
-            exit 1
-esac
+# IBM image doesn't have ntpd or chronyd installed
+yum -y install chrony
+systemctl enable chronyd
+systemctl start chronyd
 
 TEMPLATE=$2
 # ugly, but for now the docker device has to be put by the user
@@ -39,9 +26,14 @@ DOCKERDEVICE=$3
 
 echo "-- Configure networking"
 PUBLIC_IP=`curl https://api.ipify.org/`
-hostnamectl set-hostname `hostname -f`
+# if /etc/hosts doesn't have entry "127.0.0.1 cloudera-edh-fresh-vsi.bluemix.net cloudera-edh-fresh-vsi",
+# then hostname -f returns only "bluemix.net"
+#hostnamectl set-hostname `hostname -f`
+# need to erase local etc hosts file..
+echo "127.0.0.1 localhost.localdomain localhost" > /etc/hosts
+echo "127.0.0.1 localhost4.localdomain4 localhost4" >> /etc/hosts
 echo "`hostname -I` `hostname`" >> /etc/hosts
-sed -i "s/HOSTNAME=.*/HOSTNAME=`hostname`/" /etc/sysconfig/network
+#sed -i "s/HOSTNAME=.*/HOSTNAME=`hostname`/" /etc/sysconfig/network
 iptables-save > ~/firewall.rules
 systemctl disable firewalld
 systemctl stop firewalld
@@ -160,35 +152,6 @@ python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
 # configure and start EFM and Minifi
 service efm start
-service minifi start
+#service minifi start
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
-
-
-
-
-
-
-
-
-
-[root@cloudera-edh-6-vsi OneNodeCDHCluster]# cat /etc/hosts
-# Your system has configured 'manage_etc_hosts' as True.
-# As a result, if you wish for changes to this file to persist
-# then you will need to either
-# a.) make changes to the master file in /etc/cloud/templates/hosts.redhat.tmpl
-# b.) change or remove the value of 'manage_etc_hosts' in
-#     /etc/cloud/cloud.cfg or cloud-config from user-data
-#
-# The following lines are desirable for IPv4 capable hosts
-#127.0.0.1 cloudera-edh-6-vsi.bluemix.net cloudera-edh-6-vsi
-127.0.0.1 localhost.localdomain localhost
-127.0.0.1 localhost4.localdomain4 localhost4
-
-# The following lines are desirable for IPv6 capable hosts
-#::1 cloudera-edh-6-vsi.bluemix.net cloudera-edh-6-vsi
-#::1 localhost.localdomain localhost
-#::1 localhost6.localdomain6 localhost6
-
-10.243.0.13  cloudera-edh-6-vsi.bluemix.net
-
