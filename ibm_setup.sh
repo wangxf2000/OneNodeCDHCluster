@@ -154,4 +154,14 @@ python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 service efm start
 #service minifi start
 
-echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
+# create copies of the config folders for spark and hdfs to work from CDSW.
+# the trick is to replace the hostname with the private IP so that the host can be found.
+# IBM cloud currently doesn't resolve internal hostnames.
+mkdir /etc/spark/conf2
+cp -R /etc/spark/conf/* /etc/spark/conf2
+sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/spark/conf2/*
+sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/spark/conf2/yarn-conf/*
+
+mkdir /etc/hadoop/conf2
+cp -R /etc/hadoop/conf/* /etc/hadoop/conf2
+sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/hadoop/conf2/*
