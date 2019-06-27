@@ -159,9 +159,13 @@ service efm start
 # IBM cloud currently doesn't resolve internal hostnames.
 mkdir /etc/spark/conf2
 cp -R /etc/spark/conf/* /etc/spark/conf2
-sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/spark/conf2/*
-sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/spark/conf2/yarn-conf/*
+sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/spark/conf/*
+sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/spark/conf/yarn-conf/*
 
 mkdir /etc/hadoop/conf2
 cp -R /etc/hadoop/conf/* /etc/hadoop/conf2
-sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/hadoop/conf2/*
+sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/hadoop/conf/*
+
+export HADOOP_CONF_DIR=/etc/hadoop/conf2
+export SPARK_CONF_DIR=/etc/spark/conf2
+
