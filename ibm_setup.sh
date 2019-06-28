@@ -26,13 +26,14 @@ DOCKERDEVICE=$3
 
 echo "-- Configure networking"
 PUBLIC_IP=`curl https://api.ipify.org/`
+PRIVATE_IP=`hostname -i | tr -d '[:space:]'`
 # if /etc/hosts doesn't have entry "127.0.0.1 cloudera-edh-fresh-vsi.bluemix.net cloudera-edh-fresh-vsi",
 # then hostname -f returns only "bluemix.net"
 #hostnamectl set-hostname `hostname -f`
 # need to erase local etc hosts file..
 echo "127.0.0.1 localhost.localdomain localhost" > /etc/hosts
 echo "127.0.0.1 localhost4.localdomain4 localhost4" >> /etc/hosts
-echo "`hostname -I` `hostname`" >> /etc/hosts
+echo "$PRIVATE_IP `hostname`" >> /etc/hosts
 #sed -i "s/HOSTNAME=.*/HOSTNAME=`hostname`/" /etc/sysconfig/network
 iptables-save > ~/firewall.rules
 systemctl disable firewalld
@@ -141,12 +142,12 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourHostname/`hostname`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourCDSWDomain/cdsw.$PUBLIC_IP.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourPrivateIP/`hostname -I | tr -d '[:space:]'`/g" ~/OneNodeCDHCluster/$TEMPLATE
+sed -i "s/YourPrivateIP/$PRIVATE_IP/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ~/OneNodeCDHCluster/$TEMPLATE
 
-sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/create_cluster.py
+sed -i "s/YourHostname/`hostname`/g" ~/OneNodeCDHCluster/create_cluster.py
 
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
@@ -159,12 +160,12 @@ service efm start
 # IBM cloud currently doesn't resolve internal hostnames.
 mkdir /etc/spark/conf2
 cp -R /etc/spark/conf/* /etc/spark/conf2
-sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/spark/conf/*
-sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/spark/conf/yarn-conf/*
+sed -i "s/`hostname`/$PRIVATE_IP/g" /etc/spark/conf/*
+sed -i "s/`hostname`/$PRIVATE_IP/g" /etc/spark/conf/yarn-conf/*
 
 mkdir /etc/hadoop/conf2
 cp -R /etc/hadoop/conf/* /etc/hadoop/conf2
-sed -i "s/`hostname`/`hostname -i | tr -d '[:space:]'`/g" /etc/hadoop/conf/*
+sed -i "s/`hostname`/$PRIVATE_IP/g" /etc/hadoop/conf/*
 
 export HADOOP_CONF_DIR=/etc/hadoop/conf2
 export SPARK_CONF_DIR=/etc/spark/conf2
