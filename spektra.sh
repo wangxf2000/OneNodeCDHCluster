@@ -14,31 +14,9 @@ timedatectl set-timezone UTC
 # CDSW requires Centos 7.5, so we trick it to believe it is...
 echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 
-#echo "-- Install Java OpenJDK8 and other tools"
-#yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
+umount /mnt/resource
+mount /dev/sdb1 /opt
 
-# Check input parameters
-case "$1" in
-        aws)
-            echo "server 169.254.169.123 prefer iburst minpoll 4 maxpoll 4" >> /etc/chrony.conf
-            systemctl restart chronyd
-            ;;
-        azure)
-            umount /mnt/resource
-            mount /dev/sdb1 /opt
-            ;;
-        gcp)
-            ;;
-        openstack)
-            echo "Not supported yet!"
-            exit 1
-            ;;
-        *)
-            echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
-            echo $"example: ./setup.sh azure default_template.json"
-            echo $"example: ./setup.sh aws cdsw_template.json /dev/xvdb"
-            exit 1
-esac
 
 TEMPLATE=$2
 # ugly, but for now the docker device has to be put by the user
@@ -56,27 +34,7 @@ systemctl stop firewalld
 setenforce 0
 sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 
-
-#echo "-- Install CM and MariaDB repo"
-#wget https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
-
-## MariaDB 10.1
-#cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
-#[mariadb]
-#name = MariaDB
-#baseurl = http://yum.mariadb.org/10.1/centos7-amd64
-#gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
-#gpgcheck=1
-#EOF
-
-#yum clean all
-#rm -rf /var/cache/yum/
-#yum repolist
-
-#yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
-#yum install -y MariaDB-server MariaDB-client
 cat mariadb.config > /etc/my.cnf
-
 
 echo "--Enable and start MariaDB"
 systemctl enable mariadb
@@ -148,8 +106,6 @@ done
 
 echo "-- Now CM is started and the next step is to automate using the CM API"
 
-#yum install -y epel-release
-#yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
@@ -162,6 +118,4 @@ sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/create_cluster.py
 
 python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 
-# configure and start EFM and Minifi
 service efm start
-#service minifi start
