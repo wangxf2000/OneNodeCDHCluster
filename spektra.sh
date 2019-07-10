@@ -30,6 +30,10 @@ systemctl disable firewalld
 systemctl stop firewalld
 setenforce 0
 sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+# not sure this will help...
+echo "--Sleeping for 60 seconds"
+sleep 60
+
 
 cat mariadb.config > /etc/my.cnf
 
