@@ -14,14 +14,11 @@ timedatectl set-timezone UTC
 # CDSW requires Centos 7.5, so we trick it to believe it is...
 echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 
-umount /mnt/resource
-mount /dev/sdb1 /opt
-
+#umount /mnt/resource
+#mount /dev/sdb1 /opt
 
 TEMPLATE=$2
-# ugly, but for now the docker device has to be put by the user
 DOCKERDEVICE=$3
-
 
 echo "-- Configure networking"
 PUBLIC_IP=`curl https://api.ipify.org/`
