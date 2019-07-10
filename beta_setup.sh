@@ -26,15 +26,6 @@ case "$1" in
             ;;
         gcp)
             ;;
-        ibm)
-            # IBM image doesn't have ntpd or chronyd installed
-            yum -y install chrony
-            systemctl enable chronyd
-            systemctl start chronyd
-            # need to erase local etc hosts file..
-            echo "127.0.0.1 localhost.localdomain localhost" > /etc/hosts
-            echo "127.0.0.1 localhost4.localdomain4 localhost4" >> /etc/hosts
-            ;;
         *)
             echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
             echo $"example: ./setup.sh azure default_template.json"
@@ -173,7 +164,3 @@ service efm start
 service minifi start
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
-
-
-
-
