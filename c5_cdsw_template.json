@@ -5,8 +5,11 @@
    "hostTemplates":[
       {
          "cardinality":1,
-         "refName":"HostTemplate-0-from-ip-10-0-0-211.ec2.internal",
+         "refName":"HostTemplate-0-from-YourHostname",
          "roleConfigGroupsRefNames":[
+            "cdsw-CDSW_APPLICATION-BASE",
+            "cdsw-CDSW_DOCKER-BASE",
+            "cdsw-CDSW_MASTER-BASE",
             "hdfs-BALANCER-BASE",
             "hdfs-DATANODE-BASE",
             "hdfs-NAMENODE-BASE",
@@ -40,14 +43,14 @@
       "clusterName":"OneNodeC5",
       "hosts":[
          {
-            "hostName":"ip-10-0-0-211.ec2.internal",
-            "hostTemplateRefName":"HostTemplate-0-from-ip-10-0-0-211.ec2.internal"
+            "hostName":"YourHostname",
+            "hostTemplateRefName":"HostTemplate-0-from-YourHostname"
          }
       ],
       "variables":[
          {
             "name":"hive-hive_metastore_database_host",
-            "value":"ip-10-0-0-211.ec2.internal"
+            "value":"YourHostname"
          },
          {
             "name":"hive-hive_metastore_database_password",
@@ -55,7 +58,7 @@
          },
          {
             "name":"hue-database_host",
-            "value":"ip-10-0-0-211.ec2.internal"
+            "value":"YourHostname"
          },
          {
             "name":"hue-database_password",
@@ -87,7 +90,7 @@
          },
          {
             "name":"oozie-OOZIE_SERVER-BASE-oozie_database_host",
-            "value":"ip-10-0-0-211.ec2.internal"
+            "value":"YourHostname"
          },
          {
             "name":"oozie-OOZIE_SERVER-BASE-oozie_database_password",
@@ -107,6 +110,10 @@
       {
          "product":"Anaconda",
          "version":"5.1.0.1"
+      },
+      {
+         "product":"CDSW",
+         "version":"1.5.0.p1.849870"
       },
       {
          "product":"CFM",
@@ -129,6 +136,7 @@
       "https://archive.cloudera.com/cdh5/parcels/5.16.2.8/",
       "https://archive.cloudera.com/CFM/parcels/1.0.0.0/",
       "https://repo.continuum.io/pkgs/misc/parcels/archive/",
+      "https://archive.cloudera.com/cdsw1/1.5.0/parcels/",
       "https://archive.cloudera.com/kafka/parcels/4.1.0.4/",
       "https://archive.cloudera.com/spark2/parcels/2.4.0.cloudera1/"
    ],
@@ -468,7 +476,7 @@
                   },
                   {
                      "name":"nifi.remote.input.host",
-                     "value":"ip-10-0-0-211.ec2.internal"
+                     "value":"YourHostname"
                   }
                ],
                "refName":"nifi-NIFI_NODE-BASE",
@@ -486,6 +494,59 @@
             }
          ],
          "serviceType":"NIFI"
+      },
+      {
+         "refName":"cdsw",
+         "roleConfigGroups":[
+            {
+               "base":true,
+               "refName":"cdsw-CDSW_APPLICATION-BASE",
+               "roleType":"CDSW_APPLICATION"
+            },
+            {
+               "base":true,
+               "refName":"cdsw-CDSW_MASTER-BASE",
+               "roleType":"CDSW_MASTER"
+            },
+            {
+               "base":true,
+               "configs":[
+                  {
+                     "name":"cdsw.docker.devices.config",
+                     "value":"YourDockerDevice"
+                  }
+               ],
+               "refName":"cdsw-CDSW_DOCKER-BASE",
+               "roleType":"CDSW_DOCKER"
+            }
+         ],
+         "serviceConfigs":[
+            {
+               "name":"yarn_service",
+               "ref":"yarn"
+            },
+            {
+               "name":"hdfs_service",
+               "ref":"hdfs"
+            },
+            {
+               "name":"hive_service",
+               "ref":"hive"
+            },
+            {
+               "name":"spark2_on_yarn_service",
+               "ref":"spark2_on_yarn"
+            },
+            {
+               "name":"cdsw.domain.config",
+               "value":"YourCDSWDomain"
+            },
+            {
+               "name":"cdsw.master.ip.config",
+               "value":"YourPrivateIP"
+            }
+         ],
+         "serviceType":"CDSW"
       }
    ]
 }
