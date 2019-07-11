@@ -114,7 +114,7 @@
       },
       {
          "product":"CDH",
-         "version":"5.16.1-1.cdh5.16.1.p0.3"
+         "version":"5.16.2-1.cdh5.16.2.p0.8"
       },
       {
          "product":"SPARK2",
@@ -122,14 +122,14 @@
       },
       {
          "product":"KAFKA",
-         "version":"4.0.0-1.4.0.0.p0.1"
+         "version":"4.1.0-1.4.1.0.p0.4"
       }
    ],
    "repositories":[
-      "https://archive.cloudera.com/cdh5/parcels/5.16/",
+      "https://archive.cloudera.com/cdh5/parcels/5.16.2.8/",
       "https://archive.cloudera.com/CFM/parcels/1.0.0.0/",
       "https://repo.continuum.io/pkgs/misc/parcels/archive/",
-      "https://archive.cloudera.com/kafka/parcels/latest/",
+      "https://archive.cloudera.com/kafka/parcels/4.1.0.4/",
       "https://archive.cloudera.com/spark2/parcels/2.4.0.cloudera1/"
    ],
    "services":[
