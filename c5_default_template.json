@@ -7,9 +7,6 @@
          "cardinality":1,
          "refName":"HostTemplate-0-from-YourHostname",
          "roleConfigGroupsRefNames":[
-            "cdsw-CDSW_APPLICATION-BASE",
-            "cdsw-CDSW_DOCKER-BASE",
-            "cdsw-CDSW_MASTER-BASE",
             "hdfs-BALANCER-BASE",
             "hdfs-DATANODE-BASE",
             "hdfs-NAMENODE-BASE",
@@ -112,10 +109,6 @@
          "version":"5.1.0.1"
       },
       {
-         "product":"CDSW",
-         "version":"1.5.0.p1.849870"
-      },
-      {
          "product":"CFM",
          "version":"1.0.0.0"
       },
@@ -136,7 +129,6 @@
       "https://archive.cloudera.com/cdh5/parcels/5.16/",
       "https://archive.cloudera.com/CFM/parcels/1.0.0.0/",
       "https://repo.continuum.io/pkgs/misc/parcels/archive/",
-      "https://archive.cloudera.com/cdsw1/1.5.0/parcels/",
       "https://archive.cloudera.com/kafka/parcels/latest/",
       "https://archive.cloudera.com/spark2/parcels/2.4.0.cloudera1/"
    ],
@@ -494,59 +486,6 @@
             }
          ],
          "serviceType":"NIFI"
-      },
-      {
-         "refName":"cdsw",
-         "roleConfigGroups":[
-            {
-               "base":true,
-               "refName":"cdsw-CDSW_APPLICATION-BASE",
-               "roleType":"CDSW_APPLICATION"
-            },
-            {
-               "base":true,
-               "refName":"cdsw-CDSW_MASTER-BASE",
-               "roleType":"CDSW_MASTER"
-            },
-            {
-               "base":true,
-               "configs":[
-                  {
-                     "name":"cdsw.docker.devices.config",
-                     "value":"YourDockerDevice"
-                  }
-               ],
-               "refName":"cdsw-CDSW_DOCKER-BASE",
-               "roleType":"CDSW_DOCKER"
-            }
-         ],
-         "serviceConfigs":[
-            {
-               "name":"yarn_service",
-               "ref":"yarn"
-            },
-            {
-               "name":"hdfs_service",
-               "ref":"hdfs"
-            },
-            {
-               "name":"hive_service",
-               "ref":"hive"
-            },
-            {
-               "name":"spark2_on_yarn_service",
-               "ref":"spark2_on_yarn"
-            },
-            {
-               "name":"cdsw.domain.config",
-               "value":"YourCDSWDomain"
-            },
-            {
-               "name":"cdsw.master.ip.config",
-               "value":"YourPrivateIP"
-            }
-         ],
-         "serviceType":"CDSW"
       }
    ]
 }
