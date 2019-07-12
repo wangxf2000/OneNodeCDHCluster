@@ -14,9 +14,6 @@ timedatectl set-timezone UTC
 # CDSW requires Centos 7.5, so we trick it to believe it is...
 echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 
-#umount /mnt/resource
-#mount /dev/sdb1 /opt
-
 TEMPLATE=$2
 DOCKERDEVICE=$3
 
@@ -32,6 +29,7 @@ setenforce 0
 sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 # not sure this will help...
 echo "--Sleeping for 60 seconds"
+service network restart
 sleep 60
 
 
