@@ -125,7 +125,7 @@
     }
   ],
   "repositories": [
-    "https://archive.cloudera.com/cdh6/{latest_supported}/parcels/",
+    "https://archive.cloudera.com/cdh6/6.2.0/parcels/",
     "https://archive.cloudera.com/CFM/parcels/1.0.0.0/",
     "https://repo.continuum.io/pkgs/misc/parcels/archive/",
     "https://archive.cloudera.com/cdsw1/1.6.0/parcels/"
