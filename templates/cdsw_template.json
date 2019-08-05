@@ -5,7 +5,7 @@
   "hostTemplates": [
     {
       "cardinality": 1,
-      "refName": "HostTemplate-0-from-ip-10-0-0-14.ec2.internal",
+      "refName": "HostTemplate-0-from-YourHostname",
       "roleConfigGroupsRefNames": [
         "cdsw-CDSW_APPLICATION-BASE",
         "cdsw-CDSW_DOCKER-BASE",
@@ -43,14 +43,14 @@
     "clusterName": "OneNodeCluster",
     "hosts": [
       {
-        "hostName": "ip-10-0-0-14.ec2.internal",
-        "hostTemplateRefName": "HostTemplate-0-from-ip-10-0-0-14.ec2.internal"
+        "hostName": "YourHostname",
+        "hostTemplateRefName": "HostTemplate-0-from-YourHostname"
       }
     ],
     "variables": [
       {
         "name": "hive-hive_metastore_database_host",
-        "value": "ip-10-0-0-14.ec2.internal"
+        "value": "YourHostname"
       },
       {
         "name": "hive-hive_metastore_database_password",
@@ -58,7 +58,7 @@
       },
       {
         "name": "hue-database_host",
-        "value": "ip-10-0-0-14.ec2.internal"
+        "value": "YourHostname"
       },
       {
         "name": "hue-database_password",
@@ -90,7 +90,7 @@
       },
       {
         "name": "oozie-OOZIE_SERVER-BASE-oozie_database_host",
-        "value": "ip-10-0-0-14.ec2.internal"
+        "value": "YourHostname"
       },
       {
         "name": "oozie-OOZIE_SERVER-BASE-oozie_database_password",
@@ -456,7 +456,7 @@
             },
             {
               "name": "nifi.remote.input.host",
-              "value": "ip-10-0-0-14.ec2.internal"
+              "value": "YourHostname"
             }
           ],
           "refName": "nifi-NIFI_NODE-BASE",
@@ -493,7 +493,7 @@
           "configs": [
             {
               "name": "cdsw.docker.devices.config",
-              "value": "/dev/nvme1n1"
+              "value": "YourDockerDevice"
             }
           ],
           "refName": "cdsw-CDSW_DOCKER-BASE",
@@ -519,11 +519,11 @@
         },
         {
           "name": "cdsw.domain.config",
-          "value": "cdsw.3.222.207.232.nip.io"
+          "value": "YourCDSWDomain"
         },
         {
           "name": "cdsw.master.ip.config",
-          "value": "10.0.0.14"
+          "value": "YourPrivateIP"
         }
       ],
       "serviceType": "CDSW"
