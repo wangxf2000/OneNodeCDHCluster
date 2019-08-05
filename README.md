@@ -59,12 +59,12 @@ The script `setup.sh` takes 3 arguments:
 
 Example: create cluster without CDSW on AWS using default_template.json
 ```
-$ ./setup.sh aws default_template.json
+$ ./setup.sh aws templates/default_template.json
 ```
 
 Example: create cluster with CDSW on Azure using cdsw_template.json
 ```
-$ ./setup.sh azure cdsw_template.json /dev/sdc
+$ ./setup.sh azure templates/cdsw_template.json /dev/sdc
 ```
 
 Wait until the script finishes, check for any error.
