@@ -39,14 +39,12 @@ Below are instructions for creating the cluster with or without CDSW service. CD
 
 ### Provisioning Cluster with Schema Registry, Phoenix or other parcels
 
-Currently, there is no automation process to download parcels such as for Schema Registry and Phoenix. You will need to download the required files from the official Cloudera website on your laptop. Then, sftp the `.parcel`, `.sha` and `.jar` files into the root home directory. The script takes care of placing these files in the correct folders during installation.
+Currently, there is no automation process to download parcels for services such as Schema Registry and Phoenix. You need to download the required files from the official Cloudera website on your laptop. Then, sftp the `.parcel`, `.sha` and `.jar` files into the root home directory. The script takes care of placing these files into the correct folders during installation.
 
-For example, you can install Schema Registry once your setup looks like the below:
+For example, you can install Schema Registry once your host looks like the below:
 
 ```
-$ ls -l ~
-total 145396
-drwxr-xr-x. 7 root   root         162 Aug  5 18:23 OneNodeCDHCluster
+$ ls -l /root/
 -rwxr-xr-x. 1 centos centos 148855790 Aug  5 18:41 SCHEMAREGISTRY-0.7.0.1.0.0.0-11-el7.parcel
 -rw-r--r--. 1 centos centos        41 Aug  5 18:41 SCHEMAREGISTRY-0.7.0.1.0.0.0-11-el7.parcel.sha
 -rwxr-xr-x. 1 centos centos     14525 Aug  5 18:41 SCHEMAREGISTRY-0.7.0.jar
