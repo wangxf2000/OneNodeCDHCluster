@@ -43,7 +43,6 @@ PUBLIC_IP=`curl https://api.ipify.org/`
 hostnamectl set-hostname `hostname -f`
 echo "`hostname -I` `hostname`" >> /etc/hosts
 sed -i "s/HOSTNAME=.*/HOSTNAME=`hostname`/" /etc/sysconfig/network
-iptables-save > ~/firewall.rules
 systemctl disable firewalld
 systemctl stop firewalld
 setenforce 0
@@ -51,7 +50,7 @@ sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 
 
 echo "-- Install CM and MariaDB repo"
-wget https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
+wget https://archive.cloudera.com/cm6/6.3.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
 
 ## MariaDB 10.1
 cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
@@ -68,7 +67,7 @@ yum repolist
 
 yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
 yum install -y MariaDB-server MariaDB-client
-cat mariadb.config > /etc/my.cnf
+cat conf/mariadb.config > /etc/my.cnf
 
 
 echo "--Enable and start MariaDB"
@@ -80,12 +79,13 @@ wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46
 tar zxf ~/mysql-connector-java-5.1.46.tar.gz -C ~
 mkdir -p /usr/share/java/
 cp ~/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar
+rm -rf ~/mysql-connector-java-5.1.46*
 
 echo "-- Create DBs required by CM"
-mysql -u root < ~/OneNodeCDHCluster/create_db.sql
+mysql -u root < ~/OneNodeCDHCluster/scripts/create_db.sql
 
 echo "-- Secure MariaDB"
-mysql -u root < ~/OneNodeCDHCluster/secure_mariadb.sql
+mysql -u root < ~/OneNodeCDHCluster/scripts/secure_mariadb.sql
 
 echo "-- Prepare CM database 'scm'"
 /opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm cloudera
@@ -117,9 +117,9 @@ chown -R root:root /opt/cloudera/cem/efm-1.0.0.1.0.0.0-54
 chown -R root:root /opt/cloudera/cem/minifi-0.6.0.1.0.0.0-54
 chown -R root:root /opt/cloudera/cem/minifi-toolkit-0.6.0.1.0.0.0-54
 rm -f /opt/cloudera/cem/efm/conf/efm.properties
-cp ~/OneNodeCDHCluster/efm.properties /opt/cloudera/cem/efm/conf
+cp ~/OneNodeCDHCluster/conf/efm.properties /opt/cloudera/cem/efm/conf
 rm -f /opt/cloudera/cem/minifi/conf/bootstrap.conf
-cp ~/OneNodeCDHCluster/bootstrap.conf /opt/cloudera/cem/minifi/conf
+cp ~/OneNodeCDHCluster/conf/bootstrap.conf /opt/cloudera/cem/minifi/conf
 sed -i "s/YourHostname/`hostname -f`/g" /opt/cloudera/cem/efm/conf/efm.properties
 sed -i "s/YourHostname/`hostname -f`/g" /opt/cloudera/cem/minifi/conf/bootstrap.conf
 /opt/cloudera/cem/minifi/bin/minifi.sh install
@@ -155,12 +155,12 @@ sed -i "s/YourCDSWDomain/cdsw.$PUBLIC_IP.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourPrivateIP/`hostname -I | tr -d '[:space:]'`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ~/OneNodeCDHCluster/$TEMPLATE
 
-sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/create_cluster.py
+sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/scripts/create_cluster.py
 
-python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
+python ~/OneNodeCDHCluster/scripts/create_cluster.py $TEMPLATE
 
 # configure and start EFM and Minifi
 service efm start
-service minifi start
+#service minifi start
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"

@@ -1,11 +1,11 @@
 {
-  "cdhVersion": "6.2.0",
-  "cmVersion": "6.2.0",
+  "cdhVersion": "6.3.0",
+  "cmVersion": "6.3.0",
   "displayName": "OneNodeCluster",
   "hostTemplates": [
     {
       "cardinality": 1,
-      "refName": "HostTemplate-0-from-YourHostname",
+      "refName": "HostTemplate-0-from-ip-10-0-0-14.ec2.internal",
       "roleConfigGroupsRefNames": [
         "cdsw-CDSW_APPLICATION-BASE",
         "cdsw-CDSW_DOCKER-BASE",
@@ -43,14 +43,14 @@
     "clusterName": "OneNodeCluster",
     "hosts": [
       {
-        "hostName": "YourHostname",
-        "hostTemplateRefName": "HostTemplate-0-from-YourHostname"
+        "hostName": "ip-10-0-0-14.ec2.internal",
+        "hostTemplateRefName": "HostTemplate-0-from-ip-10-0-0-14.ec2.internal"
       }
     ],
     "variables": [
       {
         "name": "hive-hive_metastore_database_host",
-        "value": "YourHostname"
+        "value": "ip-10-0-0-14.ec2.internal"
       },
       {
         "name": "hive-hive_metastore_database_password",
@@ -58,7 +58,7 @@
       },
       {
         "name": "hue-database_host",
-        "value": "YourHostname"
+        "value": "ip-10-0-0-14.ec2.internal"
       },
       {
         "name": "hue-database_password",
@@ -90,7 +90,7 @@
       },
       {
         "name": "oozie-OOZIE_SERVER-BASE-oozie_database_host",
-        "value": "YourHostname"
+        "value": "ip-10-0-0-14.ec2.internal"
       },
       {
         "name": "oozie-OOZIE_SERVER-BASE-oozie_database_password",
@@ -121,11 +121,11 @@
     },
     {
       "product": "CDH",
-      "version": "6.2.0-1.cdh6.2.0.p0.967373"
+      "version": "6.3.0-1.cdh6.3.0.p0.1279813"
     }
   ],
   "repositories": [
-    "https://archive.cloudera.com/cdh6/6.2.0/parcels/",
+    "https://archive.cloudera.com/cdh6/6.3.0/parcels/",
     "https://archive.cloudera.com/CFM/parcels/1.0.0.0/",
     "https://repo.continuum.io/pkgs/misc/parcels/archive/",
     "https://archive.cloudera.com/cdsw1/1.6.0/parcels/"
@@ -456,7 +456,7 @@
             },
             {
               "name": "nifi.remote.input.host",
-              "value": "YourHostname"
+              "value": "ip-10-0-0-14.ec2.internal"
             }
           ],
           "refName": "nifi-NIFI_NODE-BASE",
@@ -493,7 +493,7 @@
           "configs": [
             {
               "name": "cdsw.docker.devices.config",
-              "value": "YourDockerDevice"
+              "value": "/dev/nvme1n1"
             }
           ],
           "refName": "cdsw-CDSW_DOCKER-BASE",
@@ -519,11 +519,11 @@
         },
         {
           "name": "cdsw.domain.config",
-          "value": "YourCDSWDomain"
+          "value": "cdsw.3.222.207.232.nip.io"
         },
         {
           "name": "cdsw.master.ip.config",
-          "value": "YourPrivateIP"
+          "value": "10.0.0.14"
         }
       ],
       "serviceType": "CDSW"
