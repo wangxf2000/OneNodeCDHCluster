@@ -131,7 +131,6 @@
    ],
    "repositories":[
       "https://archive.cloudera.com/cdh6/6.3.0/parcels/",
-      "https://archive.cloudera.com/phoenix/6.2.0/parcels/",
       "https://archive.cloudera.com/CFM/parcels/1.0.0.0/"
    ],
    "services":[
