@@ -7,6 +7,8 @@
          "cardinality":1,
          "refName":"HostTemplate-0-from-YourHostname",
          "roleConfigGroupsRefNames":[
+            "hbase-MASTER-BASE",
+            "hbase-REGIONSERVER-BASE",
             "hdfs-BALANCER-BASE",
             "hdfs-DATANODE-BASE",
             "hdfs-NAMENODE-BASE",
@@ -23,17 +25,18 @@
             "kafka-KAFKA_BROKER-BASE",
             "kudu-KUDU_MASTER-BASE",
             "kudu-KUDU_TSERVER-BASE",
+            "nifi-NIFI_NODE-BASE",
+            "nifiregistry-NIFI_REGISTRY_SERVER-BASE",
+            "nifitoolkitca-NIFI_TOOLKIT_SERVER-BASE",
             "oozie-OOZIE_SERVER-BASE",
+            "phoenix-PHOENIX_QUERY_SERVER-BASE",
             "spark_on_yarn-GATEWAY-BASE",
             "spark_on_yarn-SPARK_YARN_HISTORY_SERVER-BASE",
             "yarn-JOBHISTORY-BASE",
             "yarn-NODEMANAGER-BASE",
             "yarn-RESOURCEMANAGER-BASE",
-            "zookeeper-SERVER-BASE",
-            "nifi-NIFI_NODE-BASE",
-            "nifiregistry-NIFI_REGISTRY_SERVER-BASE",
-            "nifitoolkitca-NIFI_TOOLKIT_SERVER-BASE",
-            "schemaregistry-SCHEMA_REGISTRY_SERVER-BASE"
+            "schemaregistry-SCHEMA_REGISTRY_SERVER-BASE",
+            "zookeeper-SERVER-BASE"
          ]
       }
    ],
@@ -116,6 +119,10 @@
       {
          "product":"CDH",
          "version":"6.3.0-1.cdh6.3.0.p0.1279813"
+      },
+      {
+         "product":"PHOENIX",
+         "version":"5.0.0-cdh6.2.0.p0.1308267"
       },
       {
          "product":"SCHEMAREGISTRY",
@@ -493,6 +500,73 @@
             }
          ],
          "serviceType":"SCHEMAREGISTRY"
+      },
+      {
+         "refName":"hbase",
+         "roleConfigGroups":[
+            {
+               "base":true,
+               "configs":[
+                  {
+                     "name":"hbase_regionserver_java_heapsize",
+                     "value":"524288000"
+                  }
+               ],
+               "refName":"hbase-REGIONSERVER-BASE",
+               "roleType":"REGIONSERVER"
+            },
+            {
+               "base":true,
+               "configs":[
+                  {
+                     "name":"hbase_master_java_heapsize",
+                     "value":"524288000"
+                  }
+               ],
+               "refName":"hbase-MASTER-BASE",
+               "roleType":"MASTER"
+            }
+         ],
+         "serviceConfigs":[
+            {
+               "name":"hbase_service_config_safety_valve",
+               "value":"<property>\n<name>hbase.regionserver.wal.codec</name>\n \n<value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>\n</property> \n\n<property>\n<name>hbase.region.server.rpc.scheduler.factory.class</name>\n<value>org.apache.hadoop.hbase.ipc.PhoenixRpcSchedulerFactory</value>\n  <description>Factory to create the Phoenix RPC Scheduler that uses separate queues for index and metadata updates</description>\n</property>\n\n<property>\n  <name>hbase.rpc.controllerfactory.class</name>\n<value>org.apache.hadoop.hbase.ipc.controller.ServerRpcControllerFactory</value>\n  <description>Factory to create the Phoenix RPC Scheduler that uses separate queues for index and metadata updates</description>\n</property>\n\n<property>\n <name>phoenix.functions.allowUserDefinedFunctions</name>\n <value>true</value>\n <description>enable UDF functions</description>\n</property>"
+            },
+            {
+               "name":"zookeeper_service",
+               "ref":"zookeeper"
+            },
+            {
+               "name":"hdfs_service",
+               "ref":"hdfs"
+            }
+         ],
+         "serviceType":"HBASE"
+      },
+      {
+         "refName":"phoenix",
+         "roleConfigGroups":[
+            {
+               "base":true,
+               "refName":"phoenix-PHOENIX_QUERY_SERVER-BASE",
+               "roleType":"PHOENIX_QUERY_SERVER"
+            }
+         ],
+         "serviceConfigs":[
+            {
+               "name":"hdfs_service",
+               "ref":"hdfs"
+            },
+            {
+               "name":"zookeeper_service",
+               "ref":"zookeeper"
+            },
+            {
+               "name":"hbase_service",
+               "ref":"hbase"
+            }
+         ],
+         "serviceType":"PHOENIX"
       }
    ]
 }
