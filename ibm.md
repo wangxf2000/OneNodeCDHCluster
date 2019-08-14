@@ -23,6 +23,12 @@ $ chmod +x ibm_setup.sh
 $ ./ibm_setup.sh ibm templates/ibm_template.json /dev/xvdc
 ```
 
+## Notes
+
+If you are running RHEL instead of CentOS, you must run the below to install the EPEL repo:
+```
+$ rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+```
 
 
 Login into CDSW, go to Admin > Engines and add the following
