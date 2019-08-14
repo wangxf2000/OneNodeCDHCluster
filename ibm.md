@@ -39,8 +39,4 @@ Login into CDSW, go to Admin > Engines and add the following
 HADOOP_CONF_DIR   /etc/hadoop/conf/
 ```
 
-- to **Mounts**, with *Write Access* checked:
 
-```
-/etc/hadoop/conf
-```
