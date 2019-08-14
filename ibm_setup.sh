@@ -41,7 +41,7 @@ sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 
 
 echo "-- Install CM and MariaDB repo"
-wget https://archive.cloudera.com/cm6/6.2.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
+wget https://archive.cloudera.com/cm6/6.3.0/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
 
 ## MariaDB 10.1
 cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
@@ -83,7 +83,7 @@ echo "-- Install CSDs"
 wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
 wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFICA-1.9.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
 wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFIREGISTRY-0.3.0.1.0.0.0-90.jar -P /opt/cloudera/csd/
-wget https://archive.cloudera.com/cdsw1/1.5.0/csd/CLOUDERA_DATA_SCIENCE_WORKBENCH-CDH6-1.5.0.jar -P /opt/cloudera/csd/
+wget https://archive.cloudera.com/cdsw1/1.6.0/csd/CLOUDERA_DATA_SCIENCE_WORKBENCH-CDH6-1.6.0.jar -P /opt/cloudera/csd/
 
 chown cloudera-scm:cloudera-scm /opt/cloudera/csd/*
 chmod 644 /opt/cloudera/csd/*
@@ -148,19 +148,4 @@ python ~/OneNodeCDHCluster/create_cluster.py $TEMPLATE
 # configure and start EFM and Minifi
 service efm start
 #service minifi start
-
-# create copies of the config folders for spark and hdfs to work from CDSW.
-# the trick is to replace the hostname with the private IP so that the host can be found.
-# IBM cloud currently doesn't resolve internal hostnames.
-mkdir /etc/spark/conf2
-cp -R /etc/spark/conf/* /etc/spark/conf2
-sed -i "s/`hostname`/$PRIVATE_IP/g" /etc/spark/conf/*
-sed -i "s/`hostname`/$PRIVATE_IP/g" /etc/spark/conf/yarn-conf/*
-
-mkdir /etc/hadoop/conf2
-cp -R /etc/hadoop/conf/* /etc/hadoop/conf2
-sed -i "s/`hostname`/$PRIVATE_IP/g" /etc/hadoop/conf/*
-
-export HADOOP_CONF_DIR=/etc/hadoop/conf2
-export SPARK_CONF_DIR=/etc/spark/conf2
 
