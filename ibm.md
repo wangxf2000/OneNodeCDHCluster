@@ -25,7 +25,7 @@ $ ./ibm_setup.sh ibm templates/ibm_template.json /dev/xvdc
 
 ## Notes
 
-If you are running RHEL instead of CentOS, you must run the below to install the EPEL repo:
+If you are running RHEL instead of CentOS, you must run the below before the script, in order to install the EPEL repo:
 ```
 $ rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 ```
