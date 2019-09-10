@@ -1,23 +1,23 @@
-# Single Node EDGE2AI CDH Cluster
+# Single Node EDGE2AI CDH Cluster 
 
-This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 16 services: 
+This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 16 services:
 
 - CDSW
 - MiNiFi
 - EFM
-- NiFi 
+- NiFi
 - NiFi CA
-- NiFi Registry 
+- NiFi Registry
 - Kafka
-- Kudu 
-- Impala 
+- Kudu
+- Impala
 - Hue
-- Hive 
-- Spark 
+- Hive
+- Spark
 - Oozie
-- HDFS 
+- HDFS
 - YARN
-- ZK 
+- ZK
 
 More services can be added or removed by updating the template used, example: HBase, Phoenix, Schema Registry, etc.
 
@@ -25,7 +25,7 @@ As this cluster is meant to be used for demos, experimenting, training, and work
 
 ## Instructions
 
-Below are instructions for creating the cluster with or without CDSW service. CDSW requires some extra resources (more powerful instance, and a secondary disk for the docker device). 
+Below are instructions for creating the cluster with or without CDSW service. CDSW requires some extra resources (more powerful instance, and a secondary disk for the docker device).
 
 ### Provisioning Cluster without CDSW
 - Create a Centos 7 VM with at least 8 vCPUs/ 32 GB RAM. Choose the plain vanilla Centos image, not a cloudera-centos image.
@@ -35,7 +35,7 @@ Below are instructions for creating the cluster with or without CDSW service. CD
 - Create a Centos 7 VM with at least 16 vCPUs/ 64 GB RAM. Choose the plain vanilla Centos image, not a cloudera-centos image.
 - OS disk size: at least 100 GB.
 - Docker device disk: at least 200GB SSD disk.
-  - Node: you need a fast disk more than you need a large disk: aim for a disk with 3000 IOPS. This might mean choosing a 1TB disk. 
+  - Node: you need a fast disk more than you need a large disk: aim for a disk with 3000 IOPS. This might mean choosing a 1TB disk.
 
 ### Provisioning Cluster with Schema Registry, Phoenix or other parcels
 
@@ -115,7 +115,7 @@ nvme1n1     259:0    0 1000G  0 disk
 $ ./setup.sh aws templates/cdsw_template.json /dev/nvme1n1
 ```
 
-Azure Standard D8s v3 or Standard D16s v3 
+Azure Standard D8s v3 or Standard D16s v3
 ```
 $ lsblk
 NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
@@ -135,11 +135,9 @@ GCP n1-standard-8 or n1-standard-16
 ```
 $ lsblk
 NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-sda      8:0    0  100G  0 disk 
+sda      8:0    0  100G  0 disk
 └─sda1   8:1    0  100G  0 part /
-sdb      8:16   0 1000G  0 disk 
+sdb      8:16   0 1000G  0 disk
 
 $ ./setup.sh gcp templates/cdsw_template.json /dev/sdb
 ```
-
-
