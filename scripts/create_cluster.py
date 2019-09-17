@@ -63,6 +63,31 @@ instargs = cm_client.ApiHostInstallArguments(host_names=['YourHostname'],
 cmd = cm_api.host_install_command(body=instargs)
 wait(cmd)
 
+
+
+
+# Configure Hosts with property needed by SMM
+host_api = cm_client.HostsResourceApi(api_client)
+host_id = ""
+try:
+    host_id = host_api.read_hosts(view="summary").items[0].host_id
+except ApiException as e:
+    print("exception %s\n" %e)
+
+message = 'updating CM Agent safety valve for SMM'
+body = cm_client.ApiConfigList() # ApiConfigList | Configuration changes. (optional)
+body.items = [cm_client.ApiConfig(name="host_agent_safety_valve", value="kafka_broker_topic_partition_metrics_for_smm_enabled=true")]
+
+try:
+    # Updates the host configuration with the given values.
+    api_response = host_api.update_host_config(host_id, message=message, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling HostsResourceApi->update_host_config: %s\n" % e)
+
+    
+    
+    
 # create MGMT/CMS
 mgmt_api = cm_client.MgmtServiceResourceApi(api_client)
 api_service = cm_client.ApiService()
