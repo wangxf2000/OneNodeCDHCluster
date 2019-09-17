@@ -78,12 +78,8 @@ message = 'updating CM Agent safety valve for SMM'
 body = cm_client.ApiConfigList() # ApiConfigList | Configuration changes. (optional)
 body.items = [cm_client.ApiConfig(name="host_agent_safety_valve", value="kafka_broker_topic_partition_metrics_for_smm_enabled=true")]
 
-try:
-    # Updates the host configuration with the given values.
-    api_response = host_api.update_host_config(host_id, message=message, body=body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling HostsResourceApi->update_host_config: %s\n" % e)
+cmd = host_api.update_host_config(host_id, message=message, body=body)
+wait(cmd)
 
     
     
