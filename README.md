@@ -1,6 +1,6 @@
 # Single Node EDGE2AI CDH Cluster
 
-This script automatically sets up a CDH cluster on the public cloud on a single VM with the following 16 services:
+This script automatically sets up a CDH cluster on the public cloud on a single VM with the following services:
 
 - CDSW
 - MiNiFi
@@ -8,7 +8,12 @@ This script automatically sets up a CDH cluster on the public cloud on a single 
 - NiFi
 - NiFi CA
 - NiFi Registry
+- Schema Registry
+- Stream Messaging Manager
+- Stream Replication Manager
 - Kafka
+- HBase
+- Phoenix
 - Kudu
 - Impala
 - Hue
@@ -37,7 +42,7 @@ Below are instructions for creating the cluster with or without CDSW service. CD
 - Docker device disk: at least 200GB SSD disk.
   - Node: you need a fast disk more than you need a large disk: aim for a disk with 3000 IOPS. This might mean choosing a 1TB disk.
 
-### Provisioning Cluster with Schema Registry, Phoenix or other parcels
+### Provisioning Cluster with Schema Registry, Phoenix, SMM, SRM or other parcels
 
 Currently, there is no automation process to download parcels for services such as Schema Registry and Phoenix. You need to download the required files from the official Cloudera website on your laptop. Then, sftp the `.parcel`, `.sha` and `.jar` files into the root home directory. The script takes care of placing these files into the correct folders during installation.
 
