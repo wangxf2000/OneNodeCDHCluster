@@ -67,18 +67,13 @@ wait(cmd)
 
 
 # Configure Hosts with property needed by SMM
-host_api = cm_client.HostsResourceApi(api_client)
-host_id = ""
-try:
-    host_id = host_api.read_hosts(view="summary").items[0].host_id
-except ApiException as e:
-    print("exception %s\n" %e)
+host_api = cm_client.AllHostsResourceApi(api_client)
 
 message = 'updating CM Agent safety valve for SMM'
 body = cm_client.ApiConfigList() # ApiConfigList | Configuration changes. (optional)
 body.items = [cm_client.ApiConfig(name="host_agent_safety_valve", value="kafka_broker_topic_partition_metrics_for_smm_enabled=true")]
 
-cmd = host_api.update_host_config(host_id, message=message, body=body)
+cmd = host_api.update_config(message=message, body=body)
 wait(cmd)
 
     
