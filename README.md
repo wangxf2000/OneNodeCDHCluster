@@ -1,4 +1,4 @@
-# Single Node EDGE2AI CDH Cluster
+# Single Node CDH Cluster
 
 This script automatically sets up a CDH cluster on the public cloud on a single VM with the following services:
 
