@@ -33,6 +33,7 @@
                 "nifitoolkitca-NIFI_TOOLKIT_SERVER-BASE",
                 "oozie-OOZIE_SERVER-BASE",
                 "phoenix-PHOENIX_QUERY_SERVER-BASE",
+                "solr-SOLR_SERVER-BASE",
                 "spark_on_yarn-GATEWAY-BASE",
                 "spark_on_yarn-SPARK_YARN_HISTORY_SERVER-BASE",
                 "streams_messaging_manager-STREAMS_MESSAGING_MANAGER_SERVER-BASE",
@@ -707,6 +708,27 @@
                 }
             ],
             "serviceType": "CDSW"
+        },
+        {
+            "refName": "solr", 
+            "roleConfigGroups": [
+                {
+                    "base": true, 
+                    "refName": "solr-SOLR_SERVER-BASE", 
+                    "roleType": "SOLR_SERVER"
+                }
+            ], 
+            "serviceConfigs": [
+                {
+                    "name": "hdfs_service", 
+                    "ref": "hdfs"
+                }, 
+                {
+                    "name": "zookeeper_service", 
+                    "ref": "zookeeper"
+                }
+            ], 
+            "serviceType": "SOLR"
         }
     ]
 }
