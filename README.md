@@ -68,7 +68,7 @@ To install Schema Registry, you must use an appropriate template file, like `pho
 ```
 $ sudo su -
 $ yum install -y git
-$ git clone https://github.com/fabiog1901/OneNodeCDHCluster.git
+$ git clone https://github.com/wangxf2000/OneNodeCDHCluster.git
 $ cd OneNodeCDHCluster
 $ chmod +x setup.sh
 ```
