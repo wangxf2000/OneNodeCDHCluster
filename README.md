@@ -75,6 +75,7 @@ $ chmod +x setup.sh
 
 The script `setup.sh` takes 3 arguments:
 - the cloud provider name: `aws`,`azure`,`gcp`.
+- if on promise, then use `gcp`. and you need to build your own repository and modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
 - the template file.
 - OPTIONAL the Docker Device disk mount point.
 
@@ -87,7 +88,10 @@ Example: create cluster with CDSW on Azure using cdsw_template.json
 ```
 $ ./setup.sh azure templates/cdsw_template.json /dev/sdc
 ```
-
+in this cdf workshop, we use the phoenix_sr_smm_srm_template.json templates.
+```
+$ ./setup.sh gcp templates/phoenix_sr_smm_srm_template.json
+```
 Wait until the script finishes, check for any error.
 
 ## Use
