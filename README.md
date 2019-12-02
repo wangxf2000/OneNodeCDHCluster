@@ -79,6 +79,26 @@ The script `setup.sh` takes 3 arguments:
 - the template file.
 - OPTIONAL the Docker Device disk mount point.
 
+if you use your local repository, you need to do the following first
+```
+yum -y install httpd git createrepo unzip
+sed -i 's/AddType application\/x-gzip .gz .tgz/AddType application\/x-gzip .gz .tgz .parcel/' /etc/httpd/conf/httpd.conf
+systemctl enable httpd
+systemctl start httpd
+mkdir -p /var/www/html/cm6.3
+mkdir -p /var/www/html/cdh6.3
+mkdir -p /var/www/html/cdsw1.6
+mkdir -p /var/www/html/cfm1.9
+mkdir -p /var/www/html/cem1.0
+```
+then you need to download all packages and move them to each directory.
+Enter the /var/www/html/cm6.3 and createrepo 
+```
+cd /var/www/html/cm6.3
+createrepo .
+```
+replace cloudera repository to your own repository , modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
+
 Example: create cluster without CDSW on AWS using default_template.json
 ```
 $ ./setup.sh aws templates/default_template.json
