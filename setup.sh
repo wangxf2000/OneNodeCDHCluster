@@ -172,8 +172,16 @@ sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/scripts/create_clust
 
 python ~/OneNodeCDHCluster/scripts/create_cluster.py $TEMPLATE
 
+echo "--Now install required libs and start the mosquitto broker"
+
+yum install -y mosquitto
+pip install paho-mqtt
+systemctl enable mosquitto
+systemctl start mosquitto
+
+echo "--Now start efm"
 # configure and start EFM and Minifi
 service efm start
-#service minifi start
+service minifi start
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
