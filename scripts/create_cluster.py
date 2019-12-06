@@ -74,6 +74,7 @@ body = cm_client.ApiConfigList() # ApiConfigList | Configuration changes. (optio
 body.items = [cm_client.ApiConfig(name="host_agent_safety_valve", value="kafka_broker_topic_partition_metrics_for_smm_enabled=true")]
 
 cmd = host_api.update_config(message=message, body=body)
+print(cmd+" finished")
 
     
     
@@ -92,6 +93,8 @@ mgmt_api.auto_configure()    # needed?
 mgmt_api.setup_cms(body=api_service)
 cmd = mgmt_api.start_command()
 wait(cmd)
+print("mgmt_api start ok!")
+print(cmd)
 
 # create the cluster using the template
 with open(sys.argv[1]) as f:
@@ -99,7 +102,9 @@ with open(sys.argv[1]) as f:
 
 Response = namedtuple("Response", "data")
 dst_cluster_template=api_client.deserialize(response=Response(json_str),response_type=cm_client.ApiClusterTemplate)
+print("dst_cluster_template:"+dst_cluster_template)
 cmd = cm_api.import_cluster_template(add_repositories=True, body=dst_cluster_template)
+print("import_cluster_template")
 wait(cmd)
 
 # API Docs for reference
