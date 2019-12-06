@@ -73,12 +73,7 @@ cd OneNodeCDHCluster
 chmod +x setup.sh
 ```
 
-The script `setup.sh` takes 3 arguments:
-- the cloud provider name: `aws`,`azure`,`gcp`.
-- if on promise, then use `gcp`. and you need to build your own repository and modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
-- the template file.
-- OPTIONAL the Docker Device disk mount point.
-
+###local repository prepare
 if you use your local repository, you need to do the following first
 ```
 #install the tools 
@@ -138,6 +133,12 @@ systemctl enable httpd
 systemctl start httpd
 
 ```
+###deploy cluster
+The script `setup.sh` takes 3 arguments:
+- the cloud provider name: `aws`,`azure`,`gcp`.
+- if on promise, then use `gcp`. and you need to build your own repository and modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
+- the template file.
+- OPTIONAL the Docker Device disk mount point.
 
 Example: create cluster without CDSW on AWS using default_template.json
 ```
