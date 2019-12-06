@@ -108,6 +108,7 @@ Example: create cluster with CDSW on Azure using cdsw_template.json
 ```
 $ ./setup.sh azure templates/cdsw_template.json /dev/sdc
 ```
+if we build cluster on-promise, we use gcp as the cloud environment.
 in this cdf workshop, we use the phoenix_sr_smm_srm_template.json templates.
 ```
 $ ./setup.sh gcp templates/phoenix_sr_smm_srm_template.json
