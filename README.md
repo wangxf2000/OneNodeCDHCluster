@@ -73,7 +73,7 @@ cd OneNodeCDHCluster
 chmod +x setup.sh
 ```
 
-###local repository prepare
+### local repository prepare
 if you use your local repository, you need to do the following first
 ```
 #install the tools 
@@ -107,7 +107,7 @@ wget https://archive.cloudera.com/cdh6/6.3.2/parcels/manifest.json -P /var/www/h
 wget https://archive.cloudera.com/cdsw1/1.6.0/parcels/CDSW-1.6.0.p1.1294376-el7.parcel -P /var/www/html/cdsw1/1.6.0/parcels/
 wget https://archive.cloudera.com/cdsw1/1.6.0/parcels/CDSW-1.6.0.p1.1294376-el7.parcel.sha -P /var/www/html/cdsw1/1.6.0/parcels/
 wget https://archive.cloudera.com/cdsw1/1.6.0/parcels/manifest.json -P /var/www/html/cdsw1/1.6.0/parcels/
-wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -p /var/www/html/CFM/csd/1.0.0.0/
+wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -P /var/www/html/CFM/csd/1.0.0.0/
 wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFICA-1.9.0.1.0.0.0-90.jar -P /var/www/html/CFM/csd/1.0.0.0/
 wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFIREGISTRY-0.3.0.1.0.0.0-90.jar -P /var/www/html/CFM/csd/1.0.0.0/
 wget https://archive.cloudera.com/cdsw1/1.6.0/csd/CLOUDERA_DATA_SCIENCE_WORKBENCH-CDH6-1.6.0.jar -P /var/www/html/cdsw1/1.6.0/csd/
@@ -122,18 +122,19 @@ rm -rf /var/www/html/cm6/6.3.1/redhat7/yum/RPMS/x86_64/robots.txt
 #create the cm6's repo information
 createrepo /var/www/html/cm6/6.3.1/redhat7/yum/
 
-##replace cloudera repository to your own repository , modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
+### replace cloudera repository to your own repository 
+### modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
 sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup.sh
 sed -i "s/central.maven.org/`hostname -f`/g" ~/OneNodeCDHCluster/setup.sh
 sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup.sh
 sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/templates/*.json
-sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g"  /var/www/html/cm6/6.3.1/redhat7/yum/cloudera-manager.repo
+sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" /var/www/html/cm6/6.3.1/redhat7/yum/cloudera-manager.repo
 
 systemctl enable httpd
 systemctl start httpd
 
 ```
-###deploy cluster
+### deploy cluster
 The script `setup.sh` takes 3 arguments:
 - the cloud provider name: `aws`,`azure`,`gcp`.
 - if on promise, then use `gcp`. and you need to build your own repository and modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
@@ -156,7 +157,7 @@ $ ./setup.sh gcp templates/phoenix_sr_smm_srm_template.json
 ```
 Wait until the script finishes, check for any error.
 
-###deploy minifi
+### deploy minifi
 if you need to use minifi, you should do the following steps.
 ```
 echo "--Now install required libs and start the mosquitto broker"
