@@ -94,8 +94,10 @@ mkdir -p /var/www/html/CFM/parcels/1.0.0.0/
 mkdir -p /var/www/html/cdsw1/1.6.0/parcels/
 mkdir -p /var/www/html/pkgs/misc/parcels/archive/
 mkdir -p /var/www/html/maven2/org/apache/nifi/nifi-mqtt-nar/1.8.0/
+```
 
-#download the public repository to your local directory
+# download the public repository to your local directory
+```
 wget -nd -r  -l1 --no-parent https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPMS/x86_64/ -P /var/www/html/cm6/6.3.1/redhat7/yum/RPMS/x86_64/
 wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPM-GPG-KEY-cloudera -P /var/www/html/cm6/6.3.1/redhat7/yum
 wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/cloudera-manager.repo -P /var/www/html/cm6/6.3.1/redhat7/yum
