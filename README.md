@@ -137,6 +137,7 @@ sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHClust
 sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/templates/*.json
 sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" /var/www/html/cm6/6.3.1/redhat7/yum/cloudera-manager.repo
 sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/scripts/create_cluster.py
+sed -i "s?https://dev.mysql.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup.sh
 
 systemctl enable httpd
 systemctl start httpd
