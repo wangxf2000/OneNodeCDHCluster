@@ -110,6 +110,9 @@ wget https://archive.cloudera.com/cdh6/6.3.2/parcels/CDH-6.3.2-1.cdh6.3.2.p0.160
 wget https://archive.cloudera.com/cdh6/6.3.2/parcels/manifest.json -P /var/www/html/cdh6/6.3.2/parcels/
 wget https://archive.cloudera.com/cdsw1/1.6.0/parcels/CDSW-1.6.0.p1.1294376-el7.parcel -P /var/www/html/cdsw1/1.6.0/parcels/
 wget https://archive.cloudera.com/cdsw1/1.6.0/parcels/CDSW-1.6.0.p1.1294376-el7.parcel.sha -P /var/www/html/cdsw1/1.6.0/parcels/
+wget http://archive.cloudera.com/CFM/parcels/1.0.0.0/CFM-1.0.0.0-el7.parcel -P /var/www/html/CFM/parcels/1.0.0.0/
+wget http://archive.cloudera.com/CFM/parcels/1.0.0.0/CFM-1.0.0.0-el7.parcel.sha1 -P /var/www/html/CFM/parcels/1.0.0.0/
+wget http://archive.cloudera.com/CFM/parcels/1.0.0.0/manifest.json  -P /var/www/html/CFM/parcels/1.0.0.0/
 wget https://archive.cloudera.com/cdsw1/1.6.0/parcels/manifest.json -P /var/www/html/cdsw1/1.6.0/parcels/
 wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFI-1.9.0.1.0.0.0-90.jar -P /var/www/html/CFM/csd/1.0.0.0/
 wget https://archive.cloudera.com/CFM/csd/1.0.0.0/NIFICA-1.9.0.1.0.0.0-90.jar -P /var/www/html/CFM/csd/1.0.0.0/
