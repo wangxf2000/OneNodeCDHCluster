@@ -71,6 +71,7 @@ yum install -y git
 git clone https://github.com/wangxf2000/OneNodeCDHCluster.git
 cd OneNodeCDHCluster
 chmod +x setup.sh
+
 ```
 
 ### local repository prepare
@@ -94,6 +95,7 @@ mkdir -p /var/www/html/CFM/parcels/1.0.0.0/
 mkdir -p /var/www/html/cdsw1/1.6.0/parcels/
 mkdir -p /var/www/html/pkgs/misc/parcels/archive/
 mkdir -p /var/www/html/maven2/org/apache/nifi/nifi-mqtt-nar/1.8.0/
+
 ```
 
 # download the public repository to your local directory
