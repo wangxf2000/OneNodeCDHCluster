@@ -84,7 +84,6 @@ sed -i 's/AddType application\/x-gzip .gz .tgz/AddType application\/x-gzip .gz .
 #create the local repository directory
 mkdir -p /var/www/html/cm6/6.3.1/redhat7/yum/RPMS/x86_64/
 mkdir -p /var/www/html/cdh6/6.3.2/parcels/
-mkdir -p /var/www/html/cdsw1/1.6.0/parcels/
 mkdir -p /var/www/html/CFM/csd/1.0.0.0/
 mkdir -p /var/www/html/cdsw1/1.6.1/csd/
 mkdir -p /var/www/html/spark2/csd/
