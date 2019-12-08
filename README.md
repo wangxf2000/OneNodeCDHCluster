@@ -98,7 +98,7 @@ mkdir -p /var/www/html/pkgs/misc/parcels/archive/
 
 ```
 
-# download the public repository to your local directory
+### download the public repository to your local directory
 ```
 wget -nd -r  -l1 --no-parent https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPMS/x86_64/ -P /var/www/html/cm6/6.3.1/redhat7/yum/RPMS/x86_64/
 wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPM-GPG-KEY-cloudera -P /var/www/html/cm6/6.3.1/redhat7/yum
@@ -123,8 +123,8 @@ wget https://archive.cloudera.com/spark2/csd/SPARK2_ON_YARN-2.4.0.cloudera1.jar 
 wget https://archive.cloudera.com/CEM/centos7/1.x/updates/1.0.0.0/CEM-1.0.0.0-centos7-tars-tarball.tar.gz -P /var/www/html/CEM/centos7/1.x/updates/1.0.0.0/
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz -P /var/www/html/get/Downloads/Connector-J/
 wget http://central.maven.org/maven2/org/apache/nifi/nifi-mqtt-nar/1.8.0/nifi-mqtt-nar-1.8.0.nar -P /var/www/html/maven2/org/apache/nifi/nifi-mqtt-nar/1.8.0/
-wget https://repo.continuum.io/pkgs/misc/parcels/archive/Anaconda-5.1.0.1-el7.parcel -P /var/www/html/pkgs/misc/parcels/archive/
-wget https://repo.continuum.io/pkgs/misc/parcels/archive/Anaconda-5.1.0.1-el7.parcel.sha -P /var/www/html/pkgs/misc/parcels/archive/
+wget https://repo.continuum.io/pkgs/misc/parcels/archive/Anaconda-5.3.1-el7.parcel  -P /var/www/html/pkgs/misc/parcels/archive/
+wget https://repo.continuum.io/pkgs/misc/parcels/archive/Anaconda-5.3.1-el7.parcel.sha -P /var/www/html/pkgs/misc/parcels/archive/
 wget https://repo.continuum.io/pkgs/misc/parcels/archive/manifest.json -P /var/www/html/pkgs/misc/parcels/archive/
 rm -rf /var/www/html/cm6/6.3.1/redhat7/yum/RPMS/x86_64/index.html
 rm -rf /var/www/html/cm6/6.3.1/redhat7/yum/RPMS/x86_64/robots.txt
