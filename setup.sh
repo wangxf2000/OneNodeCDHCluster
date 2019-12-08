@@ -174,6 +174,7 @@ yum install -y epel-release
 yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
+pip install paho-mqtt 
 
 sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourCDSWDomain/cdsw.`hostname -i`.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
