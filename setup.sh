@@ -186,7 +186,10 @@ python ~/OneNodeCDHCluster/scripts/create_cluster.py $TEMPLATE
 
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
-echo "--Now start efm"
+
+echo "--Now start efm and minifi"
 # configure and start EFM and Minifi
-service efm start
-service minifi start
+systemctl enable efm
+systemctl start efm
+systemctl enable minifi
+systemctl start minifi
