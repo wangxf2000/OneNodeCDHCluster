@@ -40,7 +40,7 @@ def wait(cmd, timeout=None):
 
 cm_client.configuration.username = 'admin'
 cm_client.configuration.password = 'admin'
-api_client = cm_client.ApiClient("http://localhost:7180/api/v32")
+api_client = cm_client.ApiClient("http://localhost:7180/api/v19")
 
 cm_api = cm_client.ClouderaManagerResourceApi(api_client)
 
@@ -55,7 +55,7 @@ with open ("/root/myRSAkey", "r") as f:
 instargs = cm_client.ApiHostInstallArguments(host_names=['YourHostname'], 
                                              user_name='root', 
                                              private_key=key, 
-                                             cm_repo_url='https://archive.cloudera.com/cm6/6.3.0', 
+                                             cm_repo_url='https://archive.cloudera.com/cm6/6.2.0', 
                                              java_install_strategy='NONE', 
                                              ssh_port=22, 
                                              passphrase='')
