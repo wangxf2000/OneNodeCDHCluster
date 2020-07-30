@@ -94,7 +94,8 @@ echo "-- Secure MariaDB"
 mysql -u root < ~/OneNodeCDHCluster/scripts/secure_mariadb.sql
 
 echo "-- Prepare CM database 'scm'"
-/opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm cloudera
+/usr/share/cmf/schema/scm_prepare_database.sh mysql scm scm cloudera
+#/opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm cloudera
 
 
 echo "-- Enable passwordless root login via rsa key"
