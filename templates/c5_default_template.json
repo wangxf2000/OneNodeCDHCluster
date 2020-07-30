@@ -1,6 +1,6 @@
 {
    "cdhVersion":"5.16.1",
-   "cmVersion":"6.2.0",
+   "cmVersion":"5.16.2",
    "displayName":"OneNodeC5",
    "hostTemplates":[
       {
