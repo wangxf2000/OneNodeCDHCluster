@@ -98,13 +98,14 @@ echo "-- Prepare CM database 'scm'"
 #/opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm cloudera
 
 
-echo "-- Enable passwordless root login via rsa key"
-ssh-keygen -f ~/myRSAkey -t rsa -N ""
-mkdir ~/.ssh
-cat ~/myRSAkey.pub >> ~/.ssh/authorized_keys
-chmod 400 ~/.ssh/authorized_keys
-ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
+#echo "-- Enable passwordless root login via rsa key"
+#ssh-keygen -f ~/myRSAkey -t rsa -N ""
+#mkdir ~/.ssh
+#cat ~/myRSAkey.pub >> ~/.ssh/authorized_keys
+#chmod 400 ~/.ssh/authorized_keys
+#ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
 #sed -i 's/.*PermitRootLogin.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
+
 systemctl restart sshd
 
 echo "-- Start CM, it takes about 2 minutes to be ready"
@@ -124,6 +125,9 @@ pip install --upgrade pip
 pip install cm_client
 pip install paho-mqtt 
 
+yum -y install krb5-server krb5-libs krb5-auth-dialog krb5-workstation openldap-clients
+
+
 sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourCDSWDomain/cdsw.`hostname -i`.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourPrivateIP/`hostname -I | tr -d '[:space:]'`/g" ~/OneNodeCDHCluster/$TEMPLATE
@@ -136,9 +140,9 @@ python ~/OneNodeCDHCluster/scripts/create_cluster.py $TEMPLATE
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
 
-echo "--Now start efm and minifi"
+#echo "--Now start efm and minifi"
 # configure and start EFM and Minifi
-systemctl enable efm
-systemctl start efm
-systemctl enable minifi
-systemctl start minifi
+#systemctl enable efm
+#systemctl start efm
+#systemctl enable minifi
+#systemctl start minifi
