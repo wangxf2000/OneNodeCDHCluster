@@ -103,7 +103,7 @@ ssh-keygen -f ~/myRSAkey -t rsa -N ""
 mkdir ~/.ssh
 cat ~/myRSAkey.pub >> ~/.ssh/authorized_keys
 chmod 400 ~/.ssh/authorized_keys
-ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
+#ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
 #sed -i 's/.*PermitRootLogin.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
 
 systemctl restart sshd
