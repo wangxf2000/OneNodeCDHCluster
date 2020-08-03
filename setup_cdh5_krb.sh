@@ -47,7 +47,7 @@ DOCKERDEVICE=$3
 echo "-- Configure networking"
 PUBLIC_IP=`curl https://api.ipify.org/`
 hostnamectl set-hostname `hostname -f`
-echo "`hostname -I` `hostname`" >> /etc/hosts
+# echo "`hostname -I` `hostname`" >> /etc/hosts
 sed -i "s/HOSTNAME=.*/HOSTNAME=`hostname`/" /etc/sysconfig/network
 systemctl disable firewalld
 systemctl stop firewalld
@@ -103,7 +103,7 @@ ssh-keygen -f ~/myRSAkey -t rsa -N ""
 mkdir ~/.ssh
 cat ~/myRSAkey.pub >> ~/.ssh/authorized_keys
 chmod 400 ~/.ssh/authorized_keys
-#ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
+ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
 #sed -i 's/.*PermitRootLogin.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
 
 systemctl restart sshd
