@@ -240,6 +240,10 @@
                         {
                             "name": "dfs_data_dir_list", 
                             "value": "/dfs/dn"
+                        }, 
+                        {
+                            "name": "dfs.datanode.failed.volumes.tolerated", 
+                            "value": "0"
                         }
                     ], 
                     "refName": "hdfs-DATANODE-BASE", 
