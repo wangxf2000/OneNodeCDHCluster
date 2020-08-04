@@ -104,8 +104,7 @@ api_service = cm_client.ApiService()
 api_service.roles = [cm_client.ApiRole(type='SERVICEMONITOR'), 
     cm_client.ApiRole(type='HOSTMONITOR'), 
     cm_client.ApiRole(type='EVENTSERVER'),  
-    cm_client.ApiRole(type='ALERTPUBLISHER'),
-    cm_client.ApiRole(type='REPORTSMANAGER',cm_client.ApiConfig(name='headlamp_database_host', value='YourHostname'),cm_client.ApiConfig(name='headlamp_database_name', value='rman'),cm_client.ApiConfig(name='headlamp_database_password', value='cloudera'),cm_client.ApiConfig(name='headlamp_database_user', value='rman'))]
+    cm_client.ApiRole(type='ALERTPUBLISHER')]
 
 #mgmt_api.auto_assign_roles() # needed?
 #mgmt_api.auto_configure()    # needed?
