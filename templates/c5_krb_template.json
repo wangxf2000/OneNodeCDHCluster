@@ -283,10 +283,6 @@
                     "variable": "hue-database_type"
                 }, 
                 {
-                    "name": "hue_hbase_thrift", 
-                    "ref": "hbase-HBASETHRIFTSERVER-a498d53c74c25e26680832ccbaea04bb"
-                }, 
-                {
                     "name": "database_password", 
                     "variable": "hue-database_password"
                 }, 
