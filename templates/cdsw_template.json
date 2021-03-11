@@ -1,6 +1,6 @@
 {
-  "cdhVersion": "6.3.2",
-  "cmVersion": "6.3.1",
+  "cdhVersion": "6.3.4",
+  "cmVersion": "6.3.4",
   "displayName": "OneNodeCluster",
   "hostTemplates": [
     {
@@ -32,10 +32,7 @@
         "yarn-JOBHISTORY-BASE",
         "yarn-NODEMANAGER-BASE",
         "yarn-RESOURCEMANAGER-BASE",
-        "zookeeper-SERVER-BASE",
-        "nifi-NIFI_NODE-BASE",
-        "nifiregistry-NIFI_REGISTRY_SERVER-BASE",
-        "nifitoolkitca-NIFI_TOOLKIT_SERVER-BASE"
+        "zookeeper-SERVER-BASE"
       ]
     }
   ],
@@ -85,10 +82,6 @@
         "value": "/kudu/twal"
       },
       {
-        "name": "nifitoolkitca-nifi.toolkit.tls.ca.server.token",
-        "value": "ClouderaNiFi_123"
-      },
-      {
         "name": "oozie-OOZIE_SERVER-BASE-oozie_database_host",
         "value": "YourHostname"
       },
@@ -113,22 +106,17 @@
     },
     {
       "product": "CDSW",
-      "version": "1.6.1.p1.1504243"
-    },
-    {
-      "product": "CFM",
-      "version": "1.0.0.0"
+      "version": "1.9.1.p1.10118148"
     },
     {
       "product": "CDH",
-      "version": "6.3.2-1.cdh6.3.2.p0.1605554"
+      "version": "6.3.4-1.cdh6.3.4.p0.6626826"
     }
   ],
   "repositories": [
-    "https://archive.cloudera.com/cdh6/6.3.2/parcels/",
-    "https://archive.cloudera.com/CFM/parcels/1.0.0.0/",
+    "https://archive.cloudera.com/cdh6/6.3.4/parcels/",
     "https://repo.continuum.io/pkgs/misc/parcels/archive/",
-    "https://archive.cloudera.com/cdsw1/1.6.1/parcels/"
+    "https://archive.cloudera.com/cdsw1/1.9.1/parcels/"
   ],
   "services": [
     {
@@ -405,75 +393,6 @@
         }
       ],
       "serviceType": "HIVE"
-    },
-    {
-      "refName": "nifitoolkitca",
-      "roleConfigGroups": [
-        {
-          "base": true,
-          "refName": "nifitoolkitca-NIFI_TOOLKIT_SERVER-BASE",
-          "roleType": "NIFI_TOOLKIT_SERVER"
-        }
-      ],
-      "serviceConfigs": [
-        {
-          "name": "nifi.toolkit.tls.ca.server.token",
-          "variable": "nifitoolkitca-nifi.toolkit.tls.ca.server.token"
-        }
-      ],
-      "serviceType": "NIFITOOLKITCA"
-    },
-    {
-      "refName": "nifiregistry",
-      "roleConfigGroups": [
-        {
-          "base": true,
-          "refName": "nifiregistry-NIFI_REGISTRY_SERVER-BASE",
-          "roleType": "NIFI_REGISTRY_SERVER"
-        }
-      ],
-      "serviceConfigs": [
-        {
-          "name": "nifitoolkitca_service",
-          "ref": "nifitoolkitca"
-        }
-      ],
-      "serviceType": "NIFIREGISTRY"
-    },
-    {
-      "refName": "nifi",
-      "roleConfigGroups": [
-        {
-          "base": true,
-          "configs": [
-            {
-              "name": "nifi.remote.input.secure",
-              "value": "false"
-            },
-            {
-              "name": "nifi.remote.input.socket.port",
-              "value": "50999"
-            },
-            {
-              "name": "nifi.remote.input.host",
-              "value": "YourHostname"
-            }
-          ],
-          "refName": "nifi-NIFI_NODE-BASE",
-          "roleType": "NIFI_NODE"
-        }
-      ],
-      "serviceConfigs": [
-        {
-          "name": "zookeeper_service",
-          "ref": "zookeeper"
-        },
-        {
-          "name": "nifitoolkitca_service",
-          "ref": "nifitoolkitca"
-        }
-      ],
-      "serviceType": "NIFI"
     },
     {
       "refName": "cdsw",
