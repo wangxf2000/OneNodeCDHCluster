@@ -130,7 +130,7 @@ rm -rf /var/www/html/cm6/6.3.1/redhat7/yum/RPMS/x86_64/index.html
 rm -rf /var/www/html/cm6/6.3.1/redhat7/yum/RPMS/x86_64/robots.txt
 
 #create the cm6's repo information
-createrepo /var/www/html/cm6/6.3.1/redhat7/yum/
+createrepo /var/www/html/cm6/6.3.4/redhat7/yum/
 
 ### replace cloudera repository to your own repository 
 ### modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
