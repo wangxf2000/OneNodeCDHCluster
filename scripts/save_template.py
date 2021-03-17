@@ -8,7 +8,7 @@ cm_client.configuration.username = 'admin'
 cm_client.configuration.password = 'admin'
 # cm_client.configuration.verify_ssl = False
 
-api_client = cm_client.ApiClient("http://localhost:7180/api/v19")
+api_client = cm_client.ApiClient("http://localhost:7180/api/v33")
 
 clusters_api_instance = cm_client.ClustersResourceApi(api_client)
 template = clusters_api_instance.export("OneNodeCluster")
