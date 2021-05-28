@@ -13,6 +13,9 @@ echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 
 echo "-- Install Java OpenJDK8 and other tools"
 yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils
+yum install -y epel-release
+yum install -y python-pip
+pip install --upgrade pip==19.3
 
 echo "-- Installing requirements for Stream Messaging Manager"
 yum install -y gcc-c++ make 
@@ -119,9 +122,7 @@ done
 
 echo "-- Now CM is started and the next step is to automate using the CM API"
 
-yum install -y epel-release
-yum install -y python-pip
-pip install --upgrade pip
+
 pip install cm_client
 pip install paho-mqtt 
 
