@@ -125,7 +125,7 @@
         }
     ], 
     "repositories": [
-        "https://archive.cloudera.com/cdh5/parcels/{latest_supported}/"
+        "https://archive.cloudera.com/cdh5/parcels/5.16.2/"
     ], 
     "services": [
         {
