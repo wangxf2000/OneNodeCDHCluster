@@ -13,12 +13,15 @@ echo "CentOS Linux release 7.5.1810 (Core)" > /etc/redhat-release
 
 echo "-- Install Java OpenJDK8 and other tools"
 yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils bind bind-chroot
+yum install -y epel-release
+yum install -y python-pip
+pip install --upgrade pip==19.3
 
-echo "-- Installing requirements for Stream Messaging Manager"
-yum install -y gcc-c++ make 
-curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash - 
-yum install nodejs -y
-npm install forever -g 
+#echo "-- Installing requirements for Stream Messaging Manager"
+#yum install -y gcc-c++ make 
+#curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash - 
+#yum install nodejs -y
+#npm install forever -g 
 
 # Check input parameters
 case "$1" in
@@ -170,9 +173,6 @@ done
 
 echo "-- Now CM is started and the next step is to automate using the CM API"
 
-yum install -y epel-release
-yum install -y python-pip
-pip install --upgrade pip==19.3
 pip install cm_client
 pip install paho-mqtt 
 
