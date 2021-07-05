@@ -17,11 +17,11 @@ yum install -y epel-release
 yum install -y python-pip
 pip install --upgrade pip==19.3
 
-echo "-- Installing requirements for Stream Messaging Manager"
-yum install -y gcc-c++ make 
-curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash - 
-yum install nodejs -y
-npm install forever -g 
+#echo "-- Installing requirements for Stream Messaging Manager"
+#yum install -y gcc-c++ make 
+#curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash - 
+#yum install nodejs -y
+#npm install forever -g 
 
 # Check input parameters
 case "$1" in
