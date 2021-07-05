@@ -70,7 +70,7 @@ sudo su -
 yum install -y git
 git clone https://github.com/wangxf2000/OneNodeCDHCluster.git
 cd OneNodeCDHCluster
-chmod +x setup.sh
+chmod +x setup*.sh
 
 ```
 
@@ -134,13 +134,18 @@ createrepo /var/www/html/cm6/6.3.4/redhat7/yum/
 
 ### replace cloudera repository to your own repository 
 ### modify the repository in setup.sh, scripts/create_cluster.py ,templates/*json files
-sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup.sh
-sed -i "s/central.maven.org/`hostname -f`/g" ~/OneNodeCDHCluster/setup.sh
-sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup.sh
-sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/templates/*.json
-sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" /var/www/html/cm6/6.3.4/redhat7/yum/cloudera-manager.repo
-sed -i "s?https://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/scripts/create_cluster.py
-sed -i "s?https://dev.mysql.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup.sh
+sed -i "s?https://archive.cloudera.com/p?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup*.sh
+sed -i "s/central.maven.org/`hostname -f`/g" ~/OneNodeCDHCluster/setup*.sh
+sed -i "s?https://archive.cloudera.com/p?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup*.sh
+sed -i "s?https://archive.cloudera.com/p?http://`hostname -f`?g" ~/OneNodeCDHCluster/templates/*.json
+sed -i "s?https://archive.cloudera.com/p?http://`hostname -f`?g" /var/www/html/cm6/6.3.4/redhat7/yum/cloudera-manager.repo
+sed -i "s?https://archive.cloudera.com/p?http://`hostname -f`?g" ~/OneNodeCDHCluster/scripts/create_cluster*.py
+sed -i "s?https://archive.cloudera.com/p?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup*.sh
+sed -i "s?http://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup*.sh
+sed -i "s?http://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/templates/*.json
+sed -i "s?http://archive.cloudera.com?http://`hostname -f`?g" /var/www/html/cm6/6.3.4/redhat7/yum/cloudera-manager.repo
+sed -i "s?http://archive.cloudera.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/scripts/create_cluster*.py
+sed -i "s?https://dev.mysql.com?http://`hostname -f`?g" ~/OneNodeCDHCluster/setup*.sh
 sed -i "s?https://repo.continuum.io?http://`hostname -f`?g" ~/OneNodeCDHCluster/templates/*.json
 
 systemctl enable httpd
