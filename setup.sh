@@ -15,7 +15,7 @@ echo "-- Install Java OpenJDK8 and other tools"
 yum install -y java-1.8.0-openjdk-devel vim wget curl git bind-utils bind bind-chroot
 yum install -y epel-release
 yum install -y python-pip
-pip install --upgrade pip==19.3
+pip install --upgrade pip==pip==20.3.4 -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
 #echo "-- Installing requirements for Stream Messaging Manager"
 #yum install -y gcc-c++ make 
@@ -59,7 +59,7 @@ sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 
 
 echo "-- Install CM and MariaDB repo"
-wget https://archive.cloudera.com/cm6/6.3.4/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
+wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
 
 ## MariaDB 10.1
 cat - >/etc/yum.repos.d/MariaDB.repo <<EOF
@@ -111,12 +111,12 @@ wget https://archive.cloudera.com/cdsw1/1.6.1/csd/CLOUDERA_DATA_SCIENCE_WORKBENC
 #wget https://archive.cloudera.com/cdsw1/1.6.1/csd/CLOUDERA_DATA_SCIENCE_WORKBENCH-CDH5-1.6.1.jar -P /opt/cloudera/csd/
 #wget https://archive.cloudera.com/spark2/csd/SPARK2_ON_YARN-2.4.0.cloudera1.jar -P /opt/cloudera/csd/
 
-chown cloudera-scm:cloudera-scm /opt/cloudera/csd/*
-chmod 644 /opt/cloudera/csd/*
+#chown cloudera-scm:cloudera-scm /opt/cloudera/csd/*
+#chmod 644 /opt/cloudera/csd/*
 
-echo "-- Install local parcels"
-mv ~/*.parcel ~/*.parcel.sha /opt/cloudera/parcel-repo/
-chown cloudera-scm:cloudera-scm /opt/cloudera/parcel-repo/*
+#echo "-- Install local parcels"
+#mv ~/*.parcel ~/*.parcel.sha /opt/cloudera/parcel-repo/
+#chown cloudera-scm:cloudera-scm /opt/cloudera/parcel-repo/*
 
 #echo "-- Install CEM Tarballs"
 #mkdir -p /opt/cloudera/cem
@@ -174,7 +174,7 @@ done
 echo "-- Now CM is started and the next step is to automate using the CM API"
 
 pip install cm_client
-pip install paho-mqtt 
+#pip install paho-mqtt 
 
 sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/$TEMPLATE
 sed -i "s/YourCDSWDomain/cdsw.`hostname -i`.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
@@ -190,7 +190,7 @@ echo "-- At this point you can login into Cloudera Manager host on port 7180 and
 
 echo "--Now start efm and minifi"
 # configure and start EFM and Minifi
-systemctl enable efm
-systemctl start efm
-systemctl enable minifi
-systemctl start minifi
+#systemctl enable efm
+#systemctl start efm
+#systemctl enable minifi
+#systemctl start minifi
