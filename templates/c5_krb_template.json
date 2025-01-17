@@ -125,7 +125,7 @@
         }
     ], 
     "repositories": [
-        "https://archive.cloudera.com/cdh5/parcels/5.16.2/"
+        "http://192.168.0.2/cdh5.16.2/rhel7/"
     ], 
     "services": [
         {
