@@ -67,7 +67,12 @@ baseurl = http://192.168.0.2/cm5.16.2/
 gpgcheck=0
 EOF
 
-
+cat - >/etc/yum.repos.d/mysql.repo <<EOF
+[cm]
+name = Mysql
+baseurl = http://192.168.0.2/mysql/
+gpgcheck=0
+EOF
 
 yum clean all
 rm -rf /var/cache/yum/
@@ -75,6 +80,7 @@ yum repolist
 
 yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
 #yum install -y MariaDB-server MariaDB-client
+yum install -u mysql-community-client
 cat conf/mariadb.config > /etc/my.cnf
 
 
