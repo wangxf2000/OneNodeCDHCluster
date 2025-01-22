@@ -92,6 +92,7 @@ echo "--Enable and start MariaDB"
 systemctl enable mariadb
 systemctl start mariadb
 
+mkdir -p my.cnf.d
 echo "-- Install JDBC connector"
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz -P ~
 tar zxf ~/mysql-connector-java-5.1.46.tar.gz -C ~
