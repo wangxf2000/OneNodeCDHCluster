@@ -84,7 +84,10 @@ yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-
 yum install -y mysql-community-client
 cat conf/mariadb.config > /etc/my.cnf
 
-
+cat - >~/my_password.txt <<EOF
+Gyzq!123
+EOF
+chmod 0400 ~/my_password.txt
 echo "--Enable and start MariaDB"
 systemctl enable mariadb
 systemctl start mariadb
@@ -97,10 +100,10 @@ cp ~/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar /usr/share/
 rm -rf ~/mysql-connector-java-5.1.46*
 
 echo "-- Create DBs required by CM"
-mysql -u root  -h 192.168.0.2 < ~/OneNodeCDHCluster/scripts/create_db.sql
+mysql -u root  -h 192.168.0.2 --password=$(cat ~/my_password.txt ) < ~/OneNodeCDHCluster/scripts/create_db.sql
 
 #echo "-- Secure MariaDB"
-#mysql -u root  < ~/OneNodeCDHCluster/scripts/secure_mariadb.sql
+#mysql -u root  -h 192.168.0.2 --password=$(cat ~/my_password.txt ) < ~/OneNodeCDHCluster/scripts/secure_mariadb.sql
 
 echo "-- Prepare CM database 'scm'"
 /usr/share/cmf/schema/scm_prepare_database.sh mysql scm scm "Gyzq\!123"  -h 192.168.0.2 
