@@ -117,7 +117,7 @@ ssh-keyscan -H `hostname` >> ~/.ssh/known_hosts
 #systemctl restart sshd
 
 echo "-- Start CM, it takes about 2 minutes to be ready"
-#systemctl start cloudera-scm-server
+systemctl start cloudera-scm-server
 
 while [ `curl -s -X GET -u "admin:admin"  http://localhost:7180/api/version` -z ] ;
     do
@@ -128,10 +128,10 @@ done
 echo "-- Now CM is started and the next step is to automate using the CM API"
 
 
-#pip install cm_client
+pip install cm_client
 #pip install paho-mqtt 
 
-#yum -y install krb5-server krb5-libs krb5-auth-dialog krb5-workstation openldap-clients
+yum -y install krb5-server krb5-libs krb5-auth-dialog krb5-workstation openldap-clients
 
 
 #sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/$TEMPLATE
