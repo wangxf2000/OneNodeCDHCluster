@@ -122,7 +122,7 @@ done
 echo "-- Now CM is started and the next step is to automate using the CM API"
 
 
-pip install cm_client
+#pip install cm_client
 #pip install paho-mqtt 
 
 yum -y install krb5-server krb5-libs krb5-auth-dialog krb5-workstation openldap-clients
