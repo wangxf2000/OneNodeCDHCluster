@@ -122,7 +122,7 @@ done
 echo "-- Now CM is started and the next step is to automate using the CM API"
 
 
-#pip install cm_client
+pip install cm_client
 #pip install paho-mqtt 
 
 yum -y install krb5-server krb5-libs krb5-auth-dialog krb5-workstation openldap-clients
@@ -135,7 +135,7 @@ sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ~/OneNodeCDHCluster/$TEMPLATE
 
 sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/scripts/create_cluster.py
 
-#python ~/OneNodeCDHCluster/scripts/create_cluster.py $TEMPLATE
+python ~/OneNodeCDHCluster/scripts/create_cluster.py $TEMPLATE
 
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
