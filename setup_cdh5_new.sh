@@ -49,7 +49,7 @@ DOCKERDEVICE=$3
 
 echo "-- Configure networking"
 PUBLIC_IP=`curl https://api.ipify.org/`
-hostnamectl set-hostname `cdh02.gyzq.cn`
+hostnamectl set-hostname 'cdh02.gyzq.cn'
 echo "`hostname -I` `hostname` cdh02" >> /etc/hosts
 sed -i "s/HOSTNAME=.*/HOSTNAME=`hostname`/" /etc/sysconfig/network
 systemctl disable firewalld
