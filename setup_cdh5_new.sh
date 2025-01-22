@@ -77,10 +77,10 @@ EOF
 yum clean all
 rm -rf /var/cache/yum/
 yum repolist
-rpm -e --nodeps mariadb-libs
+
 yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
 #yum install -y MariaDB-server MariaDB-client
-
+rpm -e --nodeps mariadb-libs
 yum install -y mysql-community-client
 cat conf/mariadb.config > /etc/my.cnf
 
