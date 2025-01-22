@@ -135,7 +135,7 @@ sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ~/OneNodeCDHCluster/$TEMPLATE
 
 sed -i "s/YourHostname/`hostname -f`/g" ~/OneNodeCDHCluster/scripts/create_cluster.py
 
-python ~/OneNodeCDHCluster/scripts/create_cluster.py $TEMPLATE
+#python ~/OneNodeCDHCluster/scripts/create_cluster.py $TEMPLATE
 
 
 echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
