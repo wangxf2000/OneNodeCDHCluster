@@ -80,7 +80,7 @@ yum repolist
 
 yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
 #yum install -y MariaDB-server MariaDB-client
-yum install -u mysql-community-client
+yum install -y mysql-community-client
 cat conf/mariadb.config > /etc/my.cnf
 
 
